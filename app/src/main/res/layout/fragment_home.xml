@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.HomeFragment">
+    tools:context=".ui.fragments.home_screen.HomeFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -74,7 +74,8 @@
                     android:id="@+id/img_random_meal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/accent" />
+                    android:background="@color/accent"
+                    android:scaleType="centerCrop" />
             </androidx.cardview.widget.CardView>
 
             <TextView

@@ -1,4 +1,4 @@
-package com.af.foodapp.activites
+package com.af.foodapp.ui.activites
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
