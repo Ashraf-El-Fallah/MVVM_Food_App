@@ -52,6 +52,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/myfont"
                 android:text="What would you like to eat"
+                android:textColor="@color/black"
                 android:textSize="@dimen/_17sdp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@id/linear_header"

@@ -6,4 +6,5 @@ import retrofit2.Call
 
 class HomeRepository {
     fun getRandomMeal(): Call<MealList> = RetrofitInstance.api.getRandomMeal()
+
 }

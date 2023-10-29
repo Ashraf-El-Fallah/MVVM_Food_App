@@ -10,13 +10,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeViewModel(
-    private val homeRepository: HomeRepository
-) : ViewModel() {
+class HomeViewModel() : ViewModel() {
     //MutableLiveData means you can change it .. but live data you can't change it
     private var randomMealLiveData = MutableLiveData<Meal>()
     fun getRandomMeal() {
-        homeRepository.getRandomMeal().enqueue(object : Callback<MealList> {
+        HomeRepository().getRandomMeal().enqueue(object : Callback<MealList> {
             override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
                 if (response.body() != null) {
                     val randomMeal: Meal = response.body()!!.meals[0]

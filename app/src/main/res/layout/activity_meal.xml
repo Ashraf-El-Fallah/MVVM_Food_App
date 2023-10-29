@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activites.MealActivity">
+    tools:context=".ui.activites.meal_screen.MealActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -18,7 +18,9 @@
             android:layout_height="match_parent"
             app:contentScrim="@color/accent"
             app:layout_scrollFlags="snap|scroll|exitUntilCollapsed"
-            app:title="Meal Name">
+            app:title="Meal Name"
+            app:collapsedTitleTextColor="@color/white"
+            app:expandedTitleTextColor="@color/white">
 
             <ImageView
                 android:id="@+id/img_meal_detail"
@@ -38,6 +40,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_add_to_favorites"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_10sdp"
@@ -69,6 +72,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
+                    android:id="@+id/tv_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -79,6 +83,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tv_area"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -104,6 +109,7 @@
                 app:layout_constraintTop_toBottomOf="@id/linear_layout" />
 
             <TextView
+                android:id="@+id/tv_instructions_steps"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_2sdp"
@@ -115,11 +121,20 @@
     </androidx.core.widget.NestedScrollView>
 
     <ImageView
-        android:id="@+id/im_youtube"
+        android:id="@+id/img_youtube"
         android:layout_width="@dimen/_48sdp"
         android:layout_height="@dimen/_40sdp"
         android:layout_gravity="bottom|center"
         android:layout_marginBottom="@dimen/_10sdp"
         android:src="@drawable/ic_youtube" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_anchor="@id/appbar"
+        app:layout_anchorGravity="bottom" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
