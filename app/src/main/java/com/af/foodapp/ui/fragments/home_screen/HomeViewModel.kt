@@ -4,8 +4,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.af.foodapp.data.model.Category
 import com.af.foodapp.data.model.CategoryList
-import com.af.foodapp.data.model.CategoryMeal
+import com.af.foodapp.data.model.MealsByCategoryList
+import com.af.foodapp.data.model.MealsByCategory
 import com.af.foodapp.data.model.Meal
 import com.af.foodapp.data.model.MealList
 import retrofit2.Call
@@ -15,8 +17,8 @@ import retrofit2.Response
 class HomeViewModel() : ViewModel() {
     //MutableLiveData means you can change it .. but live data you can't change it
     private var randomMealLiveData = MutableLiveData<Meal>()
-    private var popularItemsLiveData =
-        MutableLiveData<List<CategoryMeal>>()  // can use list <categoryMeal>
+    private var popularItemsLiveData = MutableLiveData<List<MealsByCategory>>()
+    private var categoriesLiveData = MutableLiveData<List<Category>>()
 
     fun getRandomMeal() {
         HomeRepository().getRandomMeal().enqueue(object : Callback<MealList> {
@@ -36,15 +38,32 @@ class HomeViewModel() : ViewModel() {
     }
 
     fun getPopularItems() {
-        HomeRepository().getPopularItems().enqueue(object : Callback<CategoryList> {
-            override fun onResponse(call: Call<CategoryList>, response: Response<CategoryList>) {
+        HomeRepository().getPopularItems().enqueue(object : Callback<MealsByCategoryList> {
+            override fun onResponse(
+                call: Call<MealsByCategoryList>,
+                response: Response<MealsByCategoryList>
+            ) {
                 if (response.body() != null) {
                     popularItemsLiveData.value = response.body()!!.meals
                 }
             }
 
-            override fun onFailure(call: Call<CategoryList>, t: Throwable) {
+            override fun onFailure(call: Call<MealsByCategoryList>, t: Throwable) {
                 Log.d("Home Fragment", t.message.toString())
+            }
+        })
+    }
+
+    fun getCategories() {
+        HomeRepository().getCategories().enqueue(object : Callback<CategoryList> {
+            override fun onResponse(call: Call<CategoryList>, response: Response<CategoryList>) {
+                response.body()?.let {
+                    categoriesLiveData.postValue(it.categories)
+                }
+            }
+
+            override fun onFailure(call: Call<CategoryList>, t: Throwable) {
+                Log.d("MainViewModel", t.message.toString())
             }
         })
     }
@@ -54,8 +73,11 @@ class HomeViewModel() : ViewModel() {
         return randomMealLiveData
     }
 
-    fun observePopularItemsLiveData(): LiveData<List<CategoryMeal>> {
+    fun observePopularItemsLiveData(): LiveData<List<MealsByCategory>> {
         return popularItemsLiveData
     }
 
+    fun observeCategoriesLiveData(): LiveData<List<Category>> {
+        return categoriesLiveData
+    }
 }

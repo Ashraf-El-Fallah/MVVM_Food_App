@@ -9,10 +9,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.af.foodapp.databinding.FragmentHomeBinding
 import com.af.foodapp.data.model.Meal
 import com.af.foodapp.ui.activites.meal_screen.MealActivity
+import com.af.foodapp.ui.adapters.CategoriesAdapter
 import com.af.foodapp.ui.adapters.MostPopularMealsAdapter
 import com.af.foodapp.util.MealConstants
 import com.bumptech.glide.Glide
@@ -22,11 +24,14 @@ class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var randomMeal: Meal
     private lateinit var popularItemsAdapter: MostPopularMealsAdapter
+    private lateinit var categoriesAdapter: CategoriesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         initViewModel()
         popularItemsAdapter = MostPopularMealsAdapter()
+        categoriesAdapter = CategoriesAdapter()
     }
 
     override fun onCreateView(
@@ -49,6 +54,23 @@ class HomeFragment : Fragment() {
         homeViewModel.getPopularItems()
         observerPopularItemsLiveData()
         omPopularItemClick()
+
+        prepareCategoriesRecyclerView()
+        homeViewModel.getCategories()
+        observerCategoriesLiveData()
+    }
+
+    private fun prepareCategoriesRecyclerView() {
+        binding.rvCategory.apply {
+            layoutManager = GridLayoutManager(activity, 3, GridLayoutManager.VERTICAL, false)
+            adapter = categoriesAdapter
+        }
+    }
+
+    private fun observerCategoriesLiveData() {
+        homeViewModel.observeCategoriesLiveData().observe(viewLifecycleOwner, Observer {
+            categoriesAdapter.setCategories(it)
+        })
     }
 
     private fun omPopularItemClick() {
