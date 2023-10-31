@@ -1,4 +1,4 @@
-package com.af.foodapp.model
+package com.af.foodapp.data.model
 
 data class Meal(
     val dateModified: Any,

@@ -64,7 +64,6 @@ class MealActivity : AppCompatActivity() {
 
 //        binding.collapsingToolbar.setCollapsedTitleTextColor(resources.getColor(R.color.white))
 //        binding.collapsingToolbar.setExpandedTitleColor(resources.getColor(R.color.white))
-
     }
 
     private fun getMealInformationFromIntent() {

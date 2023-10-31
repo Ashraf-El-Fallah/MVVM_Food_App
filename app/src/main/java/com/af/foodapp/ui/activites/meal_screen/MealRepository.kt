@@ -1,7 +1,7 @@
 package com.af.foodapp.ui.activites.meal_screen
 
-import com.af.foodapp.model.MealList
-import com.af.foodapp.retrofit.RetrofitInstance
+import com.af.foodapp.data.model.MealList
+import com.af.foodapp.data.retrofit.RetrofitInstance
 import retrofit2.Call
 
 class MealRepository {

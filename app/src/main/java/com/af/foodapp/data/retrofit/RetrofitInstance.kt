@@ -1,4 +1,4 @@
-package com.af.foodapp.retrofit
+package com.af.foodapp.data.retrofit
 
 import com.af.foodapp.util.GeneralConstants
 import retrofit2.Retrofit
