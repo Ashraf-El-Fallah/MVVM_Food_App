@@ -1,4 +1,4 @@
-package com.af.foodapp.ui.activites.meal_screen
+package com.af.foodapp.ui.activities.meal_screen
 
 import android.content.Intent
 import android.net.Uri

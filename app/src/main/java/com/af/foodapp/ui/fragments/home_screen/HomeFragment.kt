@@ -13,8 +13,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.af.foodapp.databinding.FragmentHomeBinding
 import com.af.foodapp.data.model.Meal
-import com.af.foodapp.ui.activites.meal_screen.MealActivity
-import com.af.foodapp.ui.adapters.CategoriesAdapter
+import com.af.foodapp.ui.activities.category_meals_screen.CategoryMealsActivity
+import com.af.foodapp.ui.activities.meal_screen.MealActivity
+import com.af.foodapp.ui.adapters.CategoriesListAdapter
 import com.af.foodapp.ui.adapters.MostPopularMealsAdapter
 import com.af.foodapp.util.MealConstants
 import com.bumptech.glide.Glide
@@ -24,14 +25,14 @@ class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var randomMeal: Meal
     private lateinit var popularItemsAdapter: MostPopularMealsAdapter
-    private lateinit var categoriesAdapter: CategoriesAdapter
+    private lateinit var categoriesListAdapter: CategoriesListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         initViewModel()
         popularItemsAdapter = MostPopularMealsAdapter()
-        categoriesAdapter = CategoriesAdapter()
+        categoriesListAdapter = CategoriesListAdapter()
     }
 
     override fun onCreateView(
@@ -58,18 +59,27 @@ class HomeFragment : Fragment() {
         prepareCategoriesRecyclerView()
         homeViewModel.getCategories()
         observerCategoriesLiveData()
+        onCategoryClick()
+    }
+
+    private fun onCategoryClick() {
+        categoriesListAdapter.onItemClick = {
+            val intent = Intent(activity, CategoryMealsActivity::class.java)
+            intent.putExtra(MealConstants.CATEGORY_NAME, it.strCategory)
+            startActivity(intent)
+        }
     }
 
     private fun prepareCategoriesRecyclerView() {
         binding.rvCategory.apply {
             layoutManager = GridLayoutManager(activity, 3, GridLayoutManager.VERTICAL, false)
-            adapter = categoriesAdapter
+            adapter = categoriesListAdapter
         }
     }
 
     private fun observerCategoriesLiveData() {
         homeViewModel.observeCategoriesLiveData().observe(viewLifecycleOwner, Observer {
-            categoriesAdapter.setCategories(it)
+            categoriesListAdapter.setCategories(it)
         })
     }
 

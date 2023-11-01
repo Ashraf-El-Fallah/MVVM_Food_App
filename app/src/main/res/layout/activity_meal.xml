@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activites.meal_screen.MealActivity">
+    tools:context=".ui.activities.meal_screen.MealActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -16,11 +16,11 @@
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentScrim="@color/accent"
-            app:layout_scrollFlags="snap|scroll|exitUntilCollapsed"
-            app:title="Meal Name"
             app:collapsedTitleTextColor="@color/white"
-            app:expandedTitleTextColor="@color/white">
+            app:contentScrim="@color/accent"
+            app:expandedTitleTextColor="@color/white"
+            app:layout_scrollFlags="snap|scroll|exitUntilCollapsed"
+            app:title="Meal Name">
 
             <ImageView
                 android:id="@+id/img_meal_detail"
@@ -112,8 +112,10 @@
                 android:id="@+id/tv_instructions_steps"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_2sdp"
                 android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/tv_instructions"
                 app:layout_constraintTop_toBottomOf="@id/tv_instructions" />
 

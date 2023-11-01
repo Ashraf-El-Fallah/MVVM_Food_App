@@ -16,10 +16,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activites.meal_screen.MealActivity"
+            android:name=".ui.activities.category_meals_screen.CategoryMealsActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activites.MainActivity"
+            android:name=".ui.activities.meal_screen.MealActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
