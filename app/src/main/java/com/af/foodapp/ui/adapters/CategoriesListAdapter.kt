@@ -3,7 +3,7 @@ package com.af.foodapp.ui.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.af.foodapp.data.model.Category
+import com.af.foodapp.data.source.remote.model.Category
 import com.af.foodapp.databinding.CategoryItemBinding
 import com.bumptech.glide.Glide
 

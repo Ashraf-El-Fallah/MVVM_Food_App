@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.af.foodapp.databinding.FragmentHomeBinding
-import com.af.foodapp.data.model.Meal
+import com.af.foodapp.data.source.remote.model.Meal
 import com.af.foodapp.ui.activities.category_meals_screen.CategoryMealsActivity
 import com.af.foodapp.ui.activities.meal_screen.MealActivity
 import com.af.foodapp.ui.adapters.CategoriesListAdapter

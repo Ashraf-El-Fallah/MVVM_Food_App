@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.af.foodapp.data.model.Meal
-import com.af.foodapp.data.model.MealList
+import com.af.foodapp.data.source.remote.model.Meal
+import com.af.foodapp.data.source.remote.model.MealList
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

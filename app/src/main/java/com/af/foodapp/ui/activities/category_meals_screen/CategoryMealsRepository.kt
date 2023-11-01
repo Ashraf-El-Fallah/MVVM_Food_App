@@ -1,6 +1,6 @@
 package com.af.foodapp.ui.activities.category_meals_screen
 
-import com.af.foodapp.data.retrofit.RetrofitInstance
+import com.af.foodapp.data.source.remote.RetrofitInstance
 
 class CategoryMealsRepository {
 

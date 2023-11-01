@@ -1,4 +1,4 @@
-package com.af.foodapp.data.model
+package com.af.foodapp.data.source.remote.model
 
 data class Meal(
     val dateModified: Any,

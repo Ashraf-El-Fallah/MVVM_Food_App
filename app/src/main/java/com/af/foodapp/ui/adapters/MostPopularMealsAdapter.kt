@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.af.foodapp.databinding.PopularItemsBinding
-import com.af.foodapp.data.model.MealsByCategory
+import com.af.foodapp.data.source.remote.model.MealsByCategory
 import com.bumptech.glide.Glide
 
 class MostPopularMealsAdapter :
