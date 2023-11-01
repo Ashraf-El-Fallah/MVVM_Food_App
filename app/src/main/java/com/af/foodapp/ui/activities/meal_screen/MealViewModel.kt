@@ -11,8 +11,10 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MealViewModel : ViewModel() {
+    //use live data to update meals when click on category
     private var mealDetailsLiveData = MutableLiveData<Meal>()
 
+    //get the meal response
     fun getMealDetail(id: String) {
         MealRepository().getMealDetails(id).enqueue(object : Callback<MealList> {
             override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
@@ -27,6 +29,7 @@ class MealViewModel : ViewModel() {
         })
     }
 
+    //to observe live data in activity and use abstraction
     fun observerMealDetailsLiveData(): LiveData<Meal> {
         return mealDetailsLiveData
     }

@@ -7,6 +7,7 @@ import com.af.foodapp.data.model.Category
 import com.af.foodapp.databinding.CategoryItemBinding
 import com.bumptech.glide.Glide
 
+//this adapter is used to display the categories of food in home screen
 class CategoriesListAdapter : RecyclerView.Adapter<CategoriesListAdapter.CategoriesViewHolder>() {
 
     inner class CategoriesViewHolder(val binding: CategoryItemBinding) :
@@ -15,6 +16,7 @@ class CategoriesListAdapter : RecyclerView.Adapter<CategoriesListAdapter.Categor
     private var categoriesList = ArrayList<Category>()
     var onItemClick: ((Category) -> Unit)? = null
 
+    //this is used to set the category list in recycler view
     fun setCategories(categoriesList: List<Category>) {
         this.categoriesList = categoriesList as ArrayList
         notifyDataSetChanged()
@@ -33,6 +35,7 @@ class CategoriesListAdapter : RecyclerView.Adapter<CategoriesListAdapter.Categor
         return categoriesList.size.coerceAtMost(12)
     }
 
+    //set the picture of category ,the name of this category and make it clickable to show the meals
     override fun onBindViewHolder(holder: CategoriesViewHolder, position: Int) {
         Glide.with(holder.itemView)
             .load(categoriesList[position].strCategoryThumb)

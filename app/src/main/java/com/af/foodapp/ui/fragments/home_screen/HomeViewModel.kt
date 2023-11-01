@@ -16,10 +16,13 @@ import retrofit2.Response
 
 class HomeViewModel() : ViewModel() {
     //MutableLiveData means you can change it .. but live data you can't change it
+
+    //live data to observe changes in home fragment
     private var randomMealLiveData = MutableLiveData<Meal>()
     private var popularItemsLiveData = MutableLiveData<List<MealsByCategory>>()
     private var categoriesLiveData = MutableLiveData<List<Category>>()
 
+    //get response and pass the random meal to live data
     fun getRandomMeal() {
         HomeRepository().getRandomMeal().enqueue(object : Callback<MealList> {
             override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
@@ -37,6 +40,7 @@ class HomeViewModel() : ViewModel() {
         })
     }
 
+    //get response and pass the popular meals to live data
     fun getPopularItems() {
         HomeRepository().getPopularItems().enqueue(object : Callback<MealsByCategoryList> {
             override fun onResponse(
@@ -54,6 +58,7 @@ class HomeViewModel() : ViewModel() {
         })
     }
 
+    //get response and pass the categories to live data
     fun getCategories() {
         HomeRepository().getCategories().enqueue(object : Callback<CategoryList> {
             override fun onResponse(call: Call<CategoryList>, response: Response<CategoryList>) {
@@ -69,6 +74,8 @@ class HomeViewModel() : ViewModel() {
     }
 
     //live data you can't change it so we use it here
+
+    //three observers to update views in home fragment
     fun observeRandomMealLiveData(): LiveData<Meal> {
         return randomMealLiveData
     }

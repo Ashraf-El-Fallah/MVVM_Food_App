@@ -7,6 +7,7 @@ import com.af.foodapp.data.retrofit.RetrofitInstance
 import retrofit2.Call
 
 class HomeRepository {
+
     fun getRandomMeal(): Call<MealList> = RetrofitInstance.api.getRandomMeal()
     fun getPopularItems(): Call<MealsByCategoryList> =
         RetrofitInstance.api.getPopularItems("Seafood")

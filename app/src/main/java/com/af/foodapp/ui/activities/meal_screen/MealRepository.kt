@@ -5,6 +5,8 @@ import com.af.foodapp.data.retrofit.RetrofitInstance
 import retrofit2.Call
 
 class MealRepository {
+
+    //get everything about meal by passing id
     fun getMealDetails(id: String): Call<MealList> =
         RetrofitInstance.api.getMealDetails(id)
 }

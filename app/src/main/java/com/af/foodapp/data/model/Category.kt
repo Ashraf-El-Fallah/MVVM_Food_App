@@ -1,5 +1,6 @@
 package com.af.foodapp.data.model
 
+
 data class Category(
     val idCategory: String,
     val strCategory: String,

@@ -7,6 +7,7 @@ import com.af.foodapp.data.model.MealsByCategory
 import com.af.foodapp.databinding.MealItemBinding
 import com.bumptech.glide.Glide
 
+//this adapter is used to display the meals after click on each category
 class CategoryMealAdapter : RecyclerView.Adapter<CategoryMealAdapter.CategoryMealViewHolder>() {
     inner class CategoryMealViewHolder(val binding: MealItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -14,6 +15,7 @@ class CategoryMealAdapter : RecyclerView.Adapter<CategoryMealAdapter.CategoryMea
     private var mealsList = ArrayList<MealsByCategory>()
     lateinit var onItemClick: ((MealsByCategory) -> Unit)
 
+    //set the meals in each category
     fun setMeals(mealsList: List<MealsByCategory>) {
         this.mealsList = mealsList as ArrayList<MealsByCategory>
         notifyDataSetChanged()
@@ -31,6 +33,7 @@ class CategoryMealAdapter : RecyclerView.Adapter<CategoryMealAdapter.CategoryMea
         return mealsList.size
     }
 
+    //set the picture and the name of each meal and make it clickable
     override fun onBindViewHolder(holder: CategoryMealViewHolder, position: Int) {
         Glide.with(holder.itemView)
             .load(mealsList[position].strMealThumb)

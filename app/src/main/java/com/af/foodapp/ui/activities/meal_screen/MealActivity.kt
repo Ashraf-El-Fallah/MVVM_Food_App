@@ -11,7 +11,9 @@ import com.af.foodapp.databinding.ActivityMealBinding
 import com.af.foodapp.util.MealConstants
 import com.bumptech.glide.Glide
 
+//this activity used to display the information of the meal like steps to cook it and link to open youtube
 class MealActivity : AppCompatActivity() {
+
     private lateinit var mealId: String
     private lateinit var mealName: String
     private lateinit var mealThumb: String
@@ -32,6 +34,7 @@ class MealActivity : AppCompatActivity() {
         onYoutubeImageClick()
     }
 
+    //to open video in youtube to show how to cook this meal
     private fun onYoutubeImageClick() {
         binding.imgYoutube.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink))
@@ -39,6 +42,7 @@ class MealActivity : AppCompatActivity() {
         }
     }
 
+    //observe the information about this meal to update the ui information
     private fun observerMealDetailsLiveData() {
         mealViewModel.observerMealDetailsLiveData().observe(this, Observer {
             onResponseCase()
@@ -49,11 +53,13 @@ class MealActivity : AppCompatActivity() {
         })
     }
 
+    //initialization for view model and pass meal id to api to get the response
     private fun initViewModel() {
         mealViewModel = ViewModelProvider(this)[MealViewModel::class.java]
         mealViewModel.getMealDetail(mealId)
     }
 
+    //set imageview and meal name
     private fun setMealInformationInViews() {
         Glide.with(applicationContext)
             .load(mealThumb)
@@ -66,6 +72,7 @@ class MealActivity : AppCompatActivity() {
 //        binding.collapsingToolbar.setExpandedTitleColor(resources.getColor(R.color.white))
     }
 
+    //get some meal information from the home fragment
     private fun getMealInformationFromIntent() {
         val intent = intent
         mealId = intent.getStringExtra(MealConstants.MEAL_ID)!!
@@ -73,6 +80,8 @@ class MealActivity : AppCompatActivity() {
         mealThumb = intent.getStringExtra(MealConstants.MEAL_THUMB)!!
     }
 
+    //this is used when response comes from api
+    //visible progress bar and hide other views
     private fun loadingCase() {
         binding.progressBar.visibility = View.VISIBLE
         binding.btnAddToFavorites.visibility = View.INVISIBLE
@@ -83,6 +92,7 @@ class MealActivity : AppCompatActivity() {
 
     }
 
+    //this is used after the response
     private fun onResponseCase() {
         binding.progressBar.visibility = View.INVISIBLE
         binding.btnAddToFavorites.visibility = View.VISIBLE

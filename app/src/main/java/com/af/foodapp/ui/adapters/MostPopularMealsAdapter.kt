@@ -10,7 +10,6 @@ import com.bumptech.glide.Glide
 class MostPopularMealsAdapter :
     RecyclerView.Adapter<MostPopularMealsAdapter.PopularMealViewHolder>() {
     lateinit var onItemClick: ((MealsByCategory) -> Unit)
-
     private var mealList = ArrayList<MealsByCategory>()
 
     fun setMeals(mealList: ArrayList<MealsByCategory>) {
@@ -32,6 +31,7 @@ class MostPopularMealsAdapter :
         return mealList.size
     }
 
+    //set the picture of each meal and make it clickable
     override fun onBindViewHolder(holder: PopularMealViewHolder, position: Int) {
         Glide.with(holder.itemView)
             .load(mealList[position].strMealThumb)

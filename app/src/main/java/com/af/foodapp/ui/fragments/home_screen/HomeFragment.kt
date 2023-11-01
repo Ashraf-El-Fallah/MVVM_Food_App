@@ -62,6 +62,7 @@ class HomeFragment : Fragment() {
         onCategoryClick()
     }
 
+    //make each category clickable and pass the name of each category to CategoryMealActivity
     private fun onCategoryClick() {
         categoriesListAdapter.onItemClick = {
             val intent = Intent(activity, CategoryMealsActivity::class.java)
@@ -70,6 +71,7 @@ class HomeFragment : Fragment() {
         }
     }
 
+    //set up categories recycler view
     private fun prepareCategoriesRecyclerView() {
         binding.rvCategory.apply {
             layoutManager = GridLayoutManager(activity, 3, GridLayoutManager.VERTICAL, false)
@@ -77,12 +79,14 @@ class HomeFragment : Fragment() {
         }
     }
 
+    //observe the change of categories list and add it to recycler view
     private fun observerCategoriesLiveData() {
         homeViewModel.observeCategoriesLiveData().observe(viewLifecycleOwner, Observer {
             categoriesListAdapter.setCategories(it)
         })
     }
 
+    //make popular items clickable and pass the information about it to MealActivity
     private fun omPopularItemClick() {
         popularItemsAdapter.onItemClick = {
             val intent = Intent(activity, MealActivity::class.java)
@@ -93,6 +97,7 @@ class HomeFragment : Fragment() {
         }
     }
 
+    //set up popular items recycler view
     private fun preparePopularItemsRecyclerView() {
         binding.rvPopularItems.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
@@ -100,13 +105,15 @@ class HomeFragment : Fragment() {
         }
     }
 
+    //observe the change of popular list and add it to recycler view
     private fun observerPopularItemsLiveData() {
         homeViewModel.observePopularItemsLiveData().observe(viewLifecycleOwner, Observer {
             popularItemsAdapter.setMeals(it as ArrayList)
         })
     }
 
-
+    //make random items clickable and pass the information about it to MealActivity
+    //send toast if meal doesn't display yet
     private fun onRandomMealClick() {
         binding.randomMealCard.setOnClickListener {
             if (::randomMeal.isInitialized) {
@@ -121,6 +128,7 @@ class HomeFragment : Fragment() {
         }
     }
 
+    //observe the change of random meal and set changes to random meal
     private fun observeRandomMealLiveData() {
         homeViewModel.observeRandomMealLiveData().observe(viewLifecycleOwner, Observer {
             Glide.with(this)
@@ -129,6 +137,7 @@ class HomeFragment : Fragment() {
             this.randomMeal = it
         })
     }
+
 
     private fun initViewModel() {
         homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]

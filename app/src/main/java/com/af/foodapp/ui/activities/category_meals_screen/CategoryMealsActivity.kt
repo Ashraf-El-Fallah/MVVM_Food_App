@@ -12,7 +12,11 @@ import com.af.foodapp.ui.activities.meal_screen.MealActivity
 import com.af.foodapp.ui.adapters.CategoryMealAdapter
 import com.af.foodapp.util.MealConstants
 
+//this activity have the recycler view of meals of the category you choose
+//when you click any meal you can show everything about this meal like the steps to cook it
 class CategoryMealsActivity : AppCompatActivity() {
+
+    //initialization for binding,View Model and adapter using in this activity
     private lateinit var binding: ActivityCategoryMealsBinding
     private lateinit var categoryMealsViewModel: CategoryMealsViewModel
     private lateinit var categoryMealsAdapter: CategoryMealAdapter
@@ -29,6 +33,7 @@ class CategoryMealsActivity : AppCompatActivity() {
         onMealClick()
     }
 
+    //use to pass information of the meal to meal activity and start it
     private fun onMealClick() {
         categoryMealsAdapter.onItemClick = {
             val intent = Intent(applicationContext, MealActivity::class.java)
@@ -39,6 +44,7 @@ class CategoryMealsActivity : AppCompatActivity() {
         }
     }
 
+    //use to prepare recycler view for meals
     private fun prepareCategoryMealsRecyclerView() {
         categoryMealsAdapter = CategoryMealAdapter()
         binding.rvMeals.apply {
@@ -47,11 +53,13 @@ class CategoryMealsActivity : AppCompatActivity() {
         }
     }
 
+    //pass the category name to the view model to pass for api to get meals of this category
     private fun getTheCategoryName() {
         intent.getStringExtra(MealConstants.CATEGORY_NAME)
             ?.let { categoryMealsViewModel.getMealsByCategory(it) }
     }
 
+    //observe meals to update the recycler view and set new data and number of meals
     private fun observeMealLiveData() {
         categoryMealsViewModel.observeMealLiveData().observe(this, Observer {
             binding.tvCategoryCount.text = "The number of meals : ${it.size.toString()}"
@@ -59,7 +67,7 @@ class CategoryMealsActivity : AppCompatActivity() {
         })
     }
 
-
+    //initialization for view model
     private fun initViewModel() {
         categoryMealsViewModel = ViewModelProvider(this)[CategoryMealsViewModel::class.java]
     }
