@@ -2,6 +2,7 @@ package com.af.foodapp.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,10 +14,11 @@ class MostPopularMealsAdapter :
     ListAdapter<MealsByCategory, MostPopularMealsAdapter.PopularMealViewHolder>(DiffCallback()) {
     lateinit var onItemClick: ((MealsByCategory) -> Unit)
     private var mealList = ArrayList<MealsByCategory>()
+    private val differ = AsyncListDiffer(this, DiffCallback())
 
     fun setMeals(mealList: ArrayList<MealsByCategory>) {
         this.mealList = mealList
-        notifyDataSetChanged()
+        differ.submitList(mealList)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopularMealViewHolder {

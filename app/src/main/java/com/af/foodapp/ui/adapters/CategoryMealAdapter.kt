@@ -2,6 +2,7 @@ package com.af.foodapp.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,17 +12,19 @@ import com.af.foodapp.databinding.MealItemBinding
 import com.bumptech.glide.Glide
 
 //this adapter is used to display the meals after click on each category
-class CategoryMealAdapter : ListAdapter<MealsByCategory,CategoryMealAdapter.CategoryMealViewHolder>(DiffCallback()) {
+class CategoryMealAdapter :
+    ListAdapter<MealsByCategory, CategoryMealAdapter.CategoryMealViewHolder>(DiffCallback()) {
     inner class CategoryMealViewHolder(val binding: MealItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     private var mealsList = ArrayList<MealsByCategory>()
     lateinit var onItemClick: ((MealsByCategory) -> Unit)
+    private val differ = AsyncListDiffer(this, DiffCallback())
 
     //set the meals in each category
     fun setMeals(mealsList: List<MealsByCategory>) {
         this.mealsList = mealsList as ArrayList<MealsByCategory>
-        notifyDataSetChanged()
+        differ.submitList(mealsList)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryMealViewHolder {
@@ -37,7 +40,10 @@ class CategoryMealAdapter : ListAdapter<MealsByCategory,CategoryMealAdapter.Cate
     }
 
     //set the picture and the name of each meal and make it clickable
-    override fun onBindViewHolder(holder: CategoryMealAdapter.CategoryMealViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: CategoryMealAdapter.CategoryMealViewHolder,
+        position: Int
+    ) {
         Glide.with(holder.itemView)
             .load(mealsList[position].strMealThumb)
             .into(holder.binding.imgMeal)
@@ -53,7 +59,10 @@ class CategoryMealAdapter : ListAdapter<MealsByCategory,CategoryMealAdapter.Cate
             return oldItem.idMeal == newItem.idMeal
         }
 
-        override fun areContentsTheSame(oldItem: MealsByCategory, newItem: MealsByCategory): Boolean {
+        override fun areContentsTheSame(
+            oldItem: MealsByCategory,
+            newItem: MealsByCategory
+        ): Boolean {
             return oldItem == newItem
         }
     }

@@ -2,6 +2,7 @@ package com.af.foodapp.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -18,11 +19,12 @@ class CategoriesListAdapter :
 
     private var categoriesList = ArrayList<Category>()
     var onItemClick: ((Category) -> Unit)? = null
+    private val differ = AsyncListDiffer(this, DiffCallback())
 
     //this is used to set the category list in recycler view
     fun setCategories(categoriesList: List<Category>) {
         this.categoriesList = categoriesList as ArrayList
-        notifyDataSetChanged()
+        differ.submitList(categoriesList)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoriesViewHolder {

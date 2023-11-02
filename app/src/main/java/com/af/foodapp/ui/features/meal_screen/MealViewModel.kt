@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.af.foodapp.data.repository.MealRepository
 import com.af.foodapp.data.source.remote.RetrofitInstance
 import com.af.foodapp.data.source.remote.model.Meal
 import com.af.foodapp.data.source.remote.model.MealList
@@ -14,7 +15,7 @@ import retrofit2.Response
 class MealViewModel() : ViewModel() {
     //use live data to update meals when click on category
     private var mealDetailsLiveData = MutableLiveData<Meal>()
-    private var mealRepository: MealRepository = MealRepository(remoteDataSource = RetrofitInstance)
+    private val mealRepository: MealRepository = MealRepository(remoteDataSource = RetrofitInstance)
 
     //get the meal response
     fun getMealDetail(id: String) {
