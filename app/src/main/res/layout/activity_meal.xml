@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.meal_screen.MealActivity">
+    tools:context=".ui.features.meal_screen.MealActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"

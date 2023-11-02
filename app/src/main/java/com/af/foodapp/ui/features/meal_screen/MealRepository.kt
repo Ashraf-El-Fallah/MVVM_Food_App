@@ -1,12 +1,12 @@
-package com.af.foodapp.ui.activities.meal_screen
+package com.af.foodapp.ui.features.meal_screen
 
 import com.af.foodapp.data.source.remote.model.MealList
 import com.af.foodapp.data.source.remote.RetrofitInstance
 import retrofit2.Call
 
-class MealRepository {
+class MealRepository(private val remoteDataSource : RetrofitInstance){
 
     //get everything about meal by passing id
     fun getMealDetails(id: String): Call<MealList> =
-        RetrofitInstance.api.getMealDetails(id)
+        remoteDataSource.api.getMealDetails(id)
 }

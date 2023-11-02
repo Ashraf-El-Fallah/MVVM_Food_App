@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.category_meals_screen.CategoryMealsActivity">
+    tools:context=".ui.features.category_meals_screen.CategoryMealsActivity">
 
     <TextView
         android:id="@+id/tv_category_count"

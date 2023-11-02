@@ -1,4 +1,4 @@
-package com.af.foodapp.ui.activities.meal_screen
+package com.af.foodapp.ui.features.meal_screen
 
 import android.content.Intent
 import android.net.Uri
@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.af.foodapp.data.source.remote.RetrofitInstance
 import com.af.foodapp.databinding.ActivityMealBinding
 import com.af.foodapp.util.MealConstants
 import com.bumptech.glide.Glide
@@ -20,6 +21,7 @@ class MealActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMealBinding
     private lateinit var mealViewModel: MealViewModel
     private lateinit var youtubeLink: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMealBinding.inflate(layoutInflater)

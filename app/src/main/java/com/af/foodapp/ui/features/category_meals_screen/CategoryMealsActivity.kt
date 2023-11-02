@@ -1,4 +1,4 @@
-package com.af.foodapp.ui.activities.category_meals_screen
+package com.af.foodapp.ui.features.category_meals_screen
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,8 +7,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
+import com.af.foodapp.data.source.remote.RetrofitInstance
 import com.af.foodapp.databinding.ActivityCategoryMealsBinding
-import com.af.foodapp.ui.activities.meal_screen.MealActivity
+import com.af.foodapp.ui.features.meal_screen.MealActivity
 import com.af.foodapp.ui.adapters.CategoryMealAdapter
 import com.af.foodapp.util.MealConstants
 

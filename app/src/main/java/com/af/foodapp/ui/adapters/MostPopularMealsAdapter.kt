@@ -2,13 +2,15 @@ package com.af.foodapp.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.af.foodapp.databinding.PopularItemsBinding
 import com.af.foodapp.data.source.remote.model.MealsByCategory
 import com.bumptech.glide.Glide
 
 class MostPopularMealsAdapter :
-    RecyclerView.Adapter<MostPopularMealsAdapter.PopularMealViewHolder>() {
+    ListAdapter<MealsByCategory, MostPopularMealsAdapter.PopularMealViewHolder>(DiffCallback()) {
     lateinit var onItemClick: ((MealsByCategory) -> Unit)
     private var mealList = ArrayList<MealsByCategory>()
 
@@ -32,7 +34,10 @@ class MostPopularMealsAdapter :
     }
 
     //set the picture of each meal and make it clickable
-    override fun onBindViewHolder(holder: PopularMealViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: MostPopularMealsAdapter.PopularMealViewHolder,
+        position: Int
+    ) {
         Glide.with(holder.itemView)
             .load(mealList[position].strMealThumb)
             .into(holder.binding.imgPopularMealItem)
@@ -44,4 +49,17 @@ class MostPopularMealsAdapter :
 
     inner class PopularMealViewHolder(val binding: PopularItemsBinding) :
         RecyclerView.ViewHolder(binding.root)
+
+    private class DiffCallback : DiffUtil.ItemCallback<MealsByCategory>() {
+        override fun areItemsTheSame(oldItem: MealsByCategory, newItem: MealsByCategory): Boolean {
+            return oldItem.idMeal == newItem.idMeal
+        }
+
+        override fun areContentsTheSame(
+            oldItem: MealsByCategory,
+            newItem: MealsByCategory
+        ): Boolean {
+            return oldItem == newItem
+        }
+    }
 }

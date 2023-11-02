@@ -1,4 +1,4 @@
-package com.af.foodapp.ui.fragments.home_screen
+package com.af.foodapp.ui.features.home_screen
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -22,11 +22,13 @@ class HomeViewModel() : ViewModel() {
     private var randomMealLiveData = MutableLiveData<Meal>()
     private var popularItemsLiveData = MutableLiveData<List<MealsByCategory>>()
     private var categoriesLiveData = MutableLiveData<List<Category>>()
-    private var remoteDataSource = RetrofitInstance
+
+    //    private var remoteDataSource = RetrofitInstance
+    private val homeRepository: HomeRepository = HomeRepository(remoteDataSource = RetrofitInstance)
 
     //get response and pass the random meal to live data
     fun getRandomMeal() {
-        HomeRepository(remoteDataSource).getRandomMeal().enqueue(object : Callback<MealList> {
+        homeRepository.getRandomMeal().enqueue(object : Callback<MealList> {
             override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
                 if (response.body() != null) {
                     val randomMeal: Meal = response.body()!!.meals[0]
@@ -44,25 +46,26 @@ class HomeViewModel() : ViewModel() {
 
     //get response and pass the popular meals to live data
     fun getPopularItems() {
-        HomeRepository(remoteDataSource).getPopularItems().enqueue(object : Callback<MealsByCategoryList> {
-            override fun onResponse(
-                call: Call<MealsByCategoryList>,
-                response: Response<MealsByCategoryList>
-            ) {
-                if (response.body() != null) {
-                    popularItemsLiveData.value = response.body()!!.meals
+        homeRepository.getPopularItems()
+            .enqueue(object : Callback<MealsByCategoryList> {
+                override fun onResponse(
+                    call: Call<MealsByCategoryList>,
+                    response: Response<MealsByCategoryList>
+                ) {
+                    if (response.body() != null) {
+                        popularItemsLiveData.value = response.body()!!.meals
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<MealsByCategoryList>, t: Throwable) {
-                Log.d("Home Fragment", t.message.toString())
-            }
-        })
+                override fun onFailure(call: Call<MealsByCategoryList>, t: Throwable) {
+                    Log.d("Home Fragment", t.message.toString())
+                }
+            })
     }
 
     //get response and pass the categories to live data
     fun getCategories() {
-        HomeRepository(remoteDataSource).getCategories().enqueue(object : Callback<CategoryList> {
+        homeRepository.getCategories().enqueue(object : Callback<CategoryList> {
             override fun onResponse(call: Call<CategoryList>, response: Response<CategoryList>) {
                 response.body()?.let {
                     categoriesLiveData.postValue(it.categories)

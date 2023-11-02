@@ -1,4 +1,4 @@
-package com.af.foodapp.ui.fragments.home_screen
+package com.af.foodapp.ui.features.home_screen
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,10 +11,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.af.foodapp.data.source.remote.RetrofitInstance
 import com.af.foodapp.databinding.FragmentHomeBinding
 import com.af.foodapp.data.source.remote.model.Meal
-import com.af.foodapp.ui.activities.category_meals_screen.CategoryMealsActivity
-import com.af.foodapp.ui.activities.meal_screen.MealActivity
+import com.af.foodapp.ui.features.category_meals_screen.CategoryMealsActivity
+import com.af.foodapp.ui.features.meal_screen.MealActivity
 import com.af.foodapp.ui.adapters.CategoriesListAdapter
 import com.af.foodapp.ui.adapters.MostPopularMealsAdapter
 import com.af.foodapp.util.MealConstants

@@ -2,13 +2,16 @@ package com.af.foodapp.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.af.foodapp.data.source.remote.model.Category
 import com.af.foodapp.data.source.remote.model.MealsByCategory
 import com.af.foodapp.databinding.MealItemBinding
 import com.bumptech.glide.Glide
 
 //this adapter is used to display the meals after click on each category
-class CategoryMealAdapter : RecyclerView.Adapter<CategoryMealAdapter.CategoryMealViewHolder>() {
+class CategoryMealAdapter : ListAdapter<MealsByCategory,CategoryMealAdapter.CategoryMealViewHolder>(DiffCallback()) {
     inner class CategoryMealViewHolder(val binding: MealItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -34,7 +37,7 @@ class CategoryMealAdapter : RecyclerView.Adapter<CategoryMealAdapter.CategoryMea
     }
 
     //set the picture and the name of each meal and make it clickable
-    override fun onBindViewHolder(holder: CategoryMealViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CategoryMealAdapter.CategoryMealViewHolder, position: Int) {
         Glide.with(holder.itemView)
             .load(mealsList[position].strMealThumb)
             .into(holder.binding.imgMeal)
@@ -45,4 +48,14 @@ class CategoryMealAdapter : RecyclerView.Adapter<CategoryMealAdapter.CategoryMea
         }
     }
 
+    private class DiffCallback : DiffUtil.ItemCallback<MealsByCategory>() {
+        override fun areItemsTheSame(oldItem: MealsByCategory, newItem: MealsByCategory): Boolean {
+            return oldItem.idMeal == newItem.idMeal
+        }
+
+        override fun areContentsTheSame(oldItem: MealsByCategory, newItem: MealsByCategory): Boolean {
+            return oldItem == newItem
+        }
+    }
 }
+

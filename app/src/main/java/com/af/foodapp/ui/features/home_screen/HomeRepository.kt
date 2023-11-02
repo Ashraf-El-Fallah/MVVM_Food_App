@@ -1,4 +1,4 @@
-package com.af.foodapp.ui.fragments.home_screen
+package com.af.foodapp.ui.features.home_screen
 
 import com.af.foodapp.data.source.remote.model.CategoryList
 import com.af.foodapp.data.source.remote.model.MealsByCategoryList

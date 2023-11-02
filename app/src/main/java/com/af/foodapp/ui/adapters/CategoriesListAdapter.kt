@@ -2,13 +2,16 @@ package com.af.foodapp.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.af.foodapp.data.source.remote.model.Category
 import com.af.foodapp.databinding.CategoryItemBinding
 import com.bumptech.glide.Glide
 
 //this adapter is used to display the categories of food in home screen
-class CategoriesListAdapter : RecyclerView.Adapter<CategoriesListAdapter.CategoriesViewHolder>() {
+class CategoriesListAdapter :
+    ListAdapter<Category, CategoriesListAdapter.CategoriesViewHolder>(DiffCallback()) {
 
     inner class CategoriesViewHolder(val binding: CategoryItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -36,7 +39,10 @@ class CategoriesListAdapter : RecyclerView.Adapter<CategoriesListAdapter.Categor
     }
 
     //set the picture of category ,the name of this category and make it clickable to show the meals
-    override fun onBindViewHolder(holder: CategoriesViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: CategoriesListAdapter.CategoriesViewHolder,
+        position: Int
+    ) {
         Glide.with(holder.itemView)
             .load(categoriesList[position].strCategoryThumb)
             .into(holder.binding.imgCategory)
@@ -46,4 +52,15 @@ class CategoriesListAdapter : RecyclerView.Adapter<CategoriesListAdapter.Categor
             onItemClick!!.invoke(categoriesList[position])
         }
     }
+
+    private class DiffCallback : DiffUtil.ItemCallback<Category>() {
+        override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean {
+            return oldItem.strCategory == newItem.strCategory
+        }
+
+        override fun areContentsTheSame(oldItem: Category, newItem: Category): Boolean {
+            return oldItem == newItem
+        }
+    }
 }
+
