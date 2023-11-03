@@ -1,6 +1,6 @@
-package com.af.foodapp.data.domain.repository
+package com.af.foodapp.data.repository
 
-import com.af.foodapp.data.domain.HomeRepositoryInterface
+import com.af.foodapp.data.HomeRepositoryInterface
 import com.af.foodapp.data.source.remote.model.CategoryList
 import com.af.foodapp.data.source.remote.model.MealsByCategoryList
 import com.af.foodapp.data.source.remote.model.MealList

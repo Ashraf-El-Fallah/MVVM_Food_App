@@ -1,6 +1,6 @@
-package com.af.foodapp.data.domain.repository
+package com.af.foodapp.data.repository
 
-import com.af.foodapp.data.domain.MealRepositoryInterface
+import com.af.foodapp.data.MealRepositoryInterface
 import com.af.foodapp.data.source.remote.model.MealList
 import com.af.foodapp.data.source.remote.RetrofitInstance
 import retrofit2.Call

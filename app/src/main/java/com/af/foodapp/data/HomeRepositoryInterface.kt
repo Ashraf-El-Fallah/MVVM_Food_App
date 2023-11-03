@@ -1,4 +1,4 @@
-package com.af.foodapp.data.domain
+package com.af.foodapp.data
 
 import com.af.foodapp.data.source.remote.model.CategoryList
 import com.af.foodapp.data.source.remote.model.MealList

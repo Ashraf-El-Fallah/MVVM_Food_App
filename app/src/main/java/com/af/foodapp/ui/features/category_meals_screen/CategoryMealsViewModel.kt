@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.af.foodapp.data.domain.repository.CategoryMealsRepository
+import com.af.foodapp.data.repository.CategoryMealsRepository
 import com.af.foodapp.data.source.remote.RetrofitInstance
 import com.af.foodapp.data.source.remote.model.MealsByCategory
 import com.af.foodapp.data.source.remote.model.MealsByCategoryList
