@@ -1,6 +1,6 @@
 package com.af.foodapp.data
 
-import com.af.foodapp.data.source.remote.model.MealList
+import com.af.foodapp.data.source.local.model.MealList
 import retrofit2.Call
 
 interface MealRepositoryInterface {

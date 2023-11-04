@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.af.foodapp.data.repository.MealRepository
 import com.af.foodapp.data.source.remote.RetrofitInstance
-import com.af.foodapp.data.source.remote.model.Meal
-import com.af.foodapp.data.source.remote.model.MealList
+import com.af.foodapp.data.source.local.model.Meal
+import com.af.foodapp.data.source.local.model.MealList
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

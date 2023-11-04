@@ -11,9 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.af.foodapp.data.source.remote.RetrofitInstance
 import com.af.foodapp.databinding.FragmentHomeBinding
-import com.af.foodapp.data.source.remote.model.Meal
+import com.af.foodapp.data.source.local.model.Meal
 import com.af.foodapp.ui.features.category_meals_screen.CategoryMealsActivity
 import com.af.foodapp.ui.features.meal_screen.MealActivity
 import com.af.foodapp.ui.adapters.CategoriesListAdapter

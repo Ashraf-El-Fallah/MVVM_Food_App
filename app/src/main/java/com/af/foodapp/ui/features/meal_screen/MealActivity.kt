@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.af.foodapp.data.source.remote.RetrofitInstance
 import com.af.foodapp.databinding.ActivityMealBinding
 import com.af.foodapp.util.MealConstants
 import com.bumptech.glide.Glide
@@ -51,7 +50,7 @@ class MealActivity : AppCompatActivity() {
             binding.tvCategory.text = "Category : ${it.strCategory}"
             binding.tvArea.text = "Area : ${it.strArea}"
             binding.tvInstructionsSteps.text = it.strInstructions
-            youtubeLink = it.strYoutube
+            youtubeLink = it.strYoutube!!
         })
     }
 

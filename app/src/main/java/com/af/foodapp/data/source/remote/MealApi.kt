@@ -2,7 +2,7 @@ package com.af.foodapp.data.source.remote
 
 import com.af.foodapp.data.source.remote.model.CategoryList
 import com.af.foodapp.data.source.remote.model.MealsByCategoryList
-import com.af.foodapp.data.source.remote.model.MealList
+import com.af.foodapp.data.source.local.model.MealList
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
