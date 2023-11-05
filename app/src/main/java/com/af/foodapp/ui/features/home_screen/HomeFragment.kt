@@ -11,8 +11,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.af.foodapp.data.IHomeRepository
+import com.af.foodapp.data.repository.HomeRepository
+import com.af.foodapp.data.source.local.MealDatabase
 import com.af.foodapp.databinding.FragmentHomeBinding
 import com.af.foodapp.data.source.local.model.Meal
+import com.af.foodapp.data.source.remote.RetrofitInstance
 import com.af.foodapp.ui.features.category_meals_screen.CategoryMealsActivity
 import com.af.foodapp.ui.features.meal_screen.MealActivity
 import com.af.foodapp.ui.adapters.CategoriesListAdapter
@@ -140,7 +144,13 @@ class HomeFragment : Fragment() {
 
 
     private fun initViewModel() {
-        homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+        val homeRepository =
+            HomeRepository(
+                remoteDataSource = RetrofitInstance.api,
+                localDataSource = MealDatabase.INSTANCE!!.mealDao()
+            )
+        val viewModelFactory = HomeViewModelFactory(homeRepository)
+        homeViewModel = ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
     }
 
 }

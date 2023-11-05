@@ -4,7 +4,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.af.foodapp.data.IHomeRepository
 import com.af.foodapp.data.repository.HomeRepository
+import com.af.foodapp.data.source.local.MealDao
 import com.af.foodapp.data.source.local.MealDatabase
 import com.af.foodapp.data.source.remote.RetrofitInstance
 import com.af.foodapp.data.source.remote.model.Category
@@ -17,17 +19,18 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeViewModel() : ViewModel() {
+class HomeViewModel(
+    private val homeRepository: HomeRepository
+) : ViewModel() {
     //MutableLiveData means you can change it .. but live data you can't change it
 
-    private val homeRepository: HomeRepository =
-        HomeRepository(remoteDataSource = RetrofitInstance, localDataSource = MealDatabase)
 
     //live data to observe changes in home fragment
     private var randomMealLiveData = MutableLiveData<Meal>()
     private var popularItemsLiveData = MutableLiveData<List<MealsByCategory>>()
     private var categoriesLiveData = MutableLiveData<List<Category>>()
-    private var favoritesMealLiveData = homeRepository.getFavoritesMeals()
+
+//    private var favoritesMealLiveData = homeRepository.getFavoritesMeals()
 
     //    private var remoteDataSource = RetrofitInstance
 
@@ -52,7 +55,7 @@ class HomeViewModel() : ViewModel() {
     //get response and pass the popular meals to live data
     fun getPopularItems() {
         homeRepository.getPopularItems()
-            .enqueue(object : Callback<MealsByCategoryList> {
+            ?.enqueue(object : Callback<MealsByCategoryList> {
                 override fun onResponse(
                     call: Call<MealsByCategoryList>,
                     response: Response<MealsByCategoryList>
@@ -98,7 +101,8 @@ class HomeViewModel() : ViewModel() {
         return categoriesLiveData
     }
 
-    fun observerFavoriteMealsLiveData(): LiveData<List<Meal>>? {
-        return favoritesMealLiveData
-    }
+//    fun observerFavoriteMealsLiveData(): LiveData<List<Meal>>? {
+//        return favoritesMealLiveData
+//    }
+
 }
