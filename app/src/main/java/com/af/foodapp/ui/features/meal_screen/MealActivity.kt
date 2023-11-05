@@ -11,7 +11,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.af.foodapp.data.repository.MealRepository
 import com.af.foodapp.data.source.local.MealDatabase
 import com.af.foodapp.data.source.local.model.Meal
+import com.af.foodapp.data.source.remote.RetrofitInstance
 import com.af.foodapp.databinding.ActivityMealBinding
+import com.af.foodapp.ui.features.home_screen.HomeViewModelFactory
 import com.af.foodapp.util.MealConstants
 import com.bumptech.glide.Glide
 
@@ -73,7 +75,13 @@ class MealActivity : AppCompatActivity() {
 
     //initialization for view model and pass meal id to api to get the response
     private fun initViewModel() {
-        mealViewModel = ViewModelProvider(this)[MealViewModel::class.java]
+        val mealRepository =
+            MealRepository(
+                localDataSource = MealDatabase.INSTANCE?.mealDao(),
+                remoteDataSource = RetrofitInstance.api
+            )
+        val viewModelFactory = MealViewModelFactory(mealRepository)
+        mealViewModel = ViewModelProvider(this,viewModelFactory)[MealViewModel::class.java]
         mealViewModel.getMealDetail(mealId)
     }
 

@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
+import com.af.foodapp.data.repository.CategoryMealsRepository
 import com.af.foodapp.data.source.remote.RetrofitInstance
 import com.af.foodapp.databinding.ActivityCategoryMealsBinding
 import com.af.foodapp.ui.features.meal_screen.MealActivity
@@ -62,7 +63,7 @@ class CategoryMealsActivity : AppCompatActivity() {
 
     //observe meals to update the recycler view and set new data and number of meals
     private fun observeMealLiveData() {
-        categoryMealsViewModel.observeMealLiveData().observe(this, Observer {
+        categoryMealsViewModel.observeMealsLiveData().observe(this, Observer {
             binding.tvCategoryCount.text = "The number of meals : ${it.size.toString()}"
             categoryMealsAdapter.setMeals(it)
         })
@@ -70,6 +71,10 @@ class CategoryMealsActivity : AppCompatActivity() {
 
     //initialization for view model
     private fun initViewModel() {
-        categoryMealsViewModel = ViewModelProvider(this)[CategoryMealsViewModel::class.java]
+        val categoryMealsRepository =
+            CategoryMealsRepository(remoteDataSource = RetrofitInstance.api)
+        val viewModelFactory = CategoryMealsViewModelFactory(categoryMealsRepository)
+        categoryMealsViewModel =
+            ViewModelProvider(this, viewModelFactory)[CategoryMealsViewModel::class.java]
     }
 }
