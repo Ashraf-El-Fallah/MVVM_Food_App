@@ -21,5 +21,5 @@ class HomeRepository(
 
     override fun getCategories(): Call<CategoryList> = remoteDataSource.api.getCategories()
 
-    override fun getFavoritesMeals(): LiveData<List<Meal>> = localDataSource.INSTANCE!!.mealDao().getAllMeals()
+    override fun getFavoritesMeals(): LiveData<List<Meal>>? = localDataSource.INSTANCE?.mealDao()?.getAllMeals()
 }

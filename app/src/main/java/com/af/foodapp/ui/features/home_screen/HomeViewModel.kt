@@ -98,7 +98,7 @@ class HomeViewModel() : ViewModel() {
         return categoriesLiveData
     }
 
-    fun observerFavoriteMealsLiveData(): LiveData<List<Meal>> {
+    fun observerFavoriteMealsLiveData(): LiveData<List<Meal>>? {
         return favoritesMealLiveData
     }
 }

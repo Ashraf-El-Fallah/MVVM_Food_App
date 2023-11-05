@@ -11,5 +11,5 @@ interface IHomeRepository {
     fun getRandomMeal(): Call<MealList>
     fun getPopularItems(): Call<MealsByCategoryList>
     fun getCategories(): Call<CategoryList>
-    fun getFavoritesMeals(): LiveData<List<Meal>>
+    fun getFavoritesMeals(): LiveData<List<Meal>>?
 }

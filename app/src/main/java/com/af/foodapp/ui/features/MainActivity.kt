@@ -14,11 +14,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initBottomNavigation()
-
     }
 
     //set up bottom navigation
-    private fun initBottomNavigation(){
+    private fun initBottomNavigation() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(binding.hostFragment.id) as NavHostFragment
         val navController = navHostFragment.navController
