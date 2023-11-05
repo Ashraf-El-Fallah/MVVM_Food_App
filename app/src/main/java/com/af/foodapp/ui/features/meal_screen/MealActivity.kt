@@ -5,8 +5,12 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.af.foodapp.data.repository.MealRepository
+import com.af.foodapp.data.source.local.MealDatabase
+import com.af.foodapp.data.source.local.model.Meal
 import com.af.foodapp.databinding.ActivityMealBinding
 import com.af.foodapp.util.MealConstants
 import com.bumptech.glide.Glide
@@ -33,6 +37,16 @@ class MealActivity : AppCompatActivity() {
         initViewModel()
         observerMealDetailsLiveData()
         onYoutubeImageClick()
+        onFavoriteMealClick()
+    }
+
+    private fun onFavoriteMealClick() {
+        binding.btnAddToFavorites.setOnClickListener {
+            mealToSave?.let {
+                mealViewModel.insertMeal(it)
+                Toast.makeText(this, "Meal saved", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     //to open video in youtube to show how to cook this meal
@@ -43,10 +57,13 @@ class MealActivity : AppCompatActivity() {
         }
     }
 
+    private var mealToSave: Meal? = null
+
     //observe the information about this meal to update the ui information
     private fun observerMealDetailsLiveData() {
         mealViewModel.observerMealDetailsLiveData().observe(this, Observer {
             onResponseCase()
+            mealToSave = it
             binding.tvCategory.text = "Category : ${it.strCategory}"
             binding.tvArea.text = "Area : ${it.strArea}"
             binding.tvInstructionsSteps.text = it.strInstructions

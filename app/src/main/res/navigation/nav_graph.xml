@@ -9,7 +9,7 @@
         android:id="@+id/homeFragment"
         android:name="com.af.foodapp.ui.features.home_screen.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_favoriteFragment"
             app:destination="@id/favoriteFragment" />
@@ -18,7 +18,7 @@
         android:id="@+id/favoriteFragment"
         android:name="com.af.foodapp.ui.features.FavoriteFragment"
         android:label="fragment_favorite"
-        tools:layout="@layout/fragment_favorite" >
+        tools:layout="@layout/fragment_favorite">
         <action
             android:id="@+id/action_favoriteFragment_to_categoriesFragment"
             app:destination="@id/categoriesFragment" />

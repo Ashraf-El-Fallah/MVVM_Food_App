@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.af.foodapp.data.repository.HomeRepository
+import com.af.foodapp.data.source.local.MealDatabase
 import com.af.foodapp.data.source.remote.RetrofitInstance
 import com.af.foodapp.data.source.remote.model.Category
 import com.af.foodapp.data.source.remote.model.CategoryList
@@ -19,13 +20,16 @@ import retrofit2.Response
 class HomeViewModel() : ViewModel() {
     //MutableLiveData means you can change it .. but live data you can't change it
 
+    private val homeRepository: HomeRepository =
+        HomeRepository(remoteDataSource = RetrofitInstance, localDataSource = MealDatabase)
+
     //live data to observe changes in home fragment
     private var randomMealLiveData = MutableLiveData<Meal>()
     private var popularItemsLiveData = MutableLiveData<List<MealsByCategory>>()
     private var categoriesLiveData = MutableLiveData<List<Category>>()
+    private var favoritesMealLiveData = homeRepository.getFavoritesMeals()
 
     //    private var remoteDataSource = RetrofitInstance
-    private val homeRepository: HomeRepository = HomeRepository(remoteDataSource = RetrofitInstance)
 
     //get response and pass the random meal to live data
     fun getRandomMeal() {
@@ -92,5 +96,9 @@ class HomeViewModel() : ViewModel() {
 
     fun observeCategoriesLiveData(): LiveData<List<Category>> {
         return categoriesLiveData
+    }
+
+    fun observerFavoriteMealsLiveData(): LiveData<List<Meal>> {
+        return favoritesMealLiveData
     }
 }

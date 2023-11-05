@@ -77,6 +77,10 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
     implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
 
+    //fragment container view
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
+
+
     // Glide
     implementation("com.github.bumptech.glide:glide:4.11.0")
     ksp("com.github.bumptech.glide:compiler:4.11.0")
