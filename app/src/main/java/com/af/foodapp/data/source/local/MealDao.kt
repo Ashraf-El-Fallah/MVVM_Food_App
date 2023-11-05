@@ -18,5 +18,5 @@ interface MealDao {
 
     //we don't use suspend because we use live data
     @Query("SELECT * FROM mealInformation")
-    fun getAllMeals(): LiveData<List<Meal>>
+    fun getAllMeals(): LiveData<List<Meal>>?
 }
