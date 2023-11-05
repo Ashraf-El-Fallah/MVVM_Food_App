@@ -12,13 +12,11 @@ import com.af.foodapp.databinding.MealItemBinding
 import com.bumptech.glide.Glide
 
 //this adapter is used to display the meals after click on each category
-class CategoryMealAdapter :
+class CategoryMealAdapter(private val onItemClick: ((MealsByCategory) -> Unit)) :
     ListAdapter<MealsByCategory, CategoryMealAdapter.CategoryMealViewHolder>(DiffCallback()) {
     inner class CategoryMealViewHolder(val binding: MealItemBinding) :
         RecyclerView.ViewHolder(binding.root)
-
     private var mealsList = ArrayList<MealsByCategory>()
-    lateinit var onItemClick: ((MealsByCategory) -> Unit)
     private val differ = AsyncListDiffer(this, DiffCallback())
 
     //set the meals in each category
