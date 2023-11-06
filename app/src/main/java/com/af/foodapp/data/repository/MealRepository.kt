@@ -1,6 +1,7 @@
 package com.af.foodapp.data.repository
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.af.foodapp.data.IMealRepository
 import com.af.foodapp.data.source.local.MealDao
@@ -15,8 +16,9 @@ class MealRepository(
     private val localDataSource: MealDao?,
     private val remoteDataSource: MealApi
 ) : IMealRepository {
+
     override fun getMealDetails(id: String): MutableLiveData<Meal> {
-        var mealDetailsLiveData = MutableLiveData<Meal>()
+        val mealDetailsLiveData = MutableLiveData<Meal>()
         remoteDataSource.getMealDetails(id)
             .enqueue(object : Callback<MealList> {
                 override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
@@ -32,8 +34,11 @@ class MealRepository(
         return mealDetailsLiveData
     }
 
-    override suspend fun insertMeal(meal: Meal): Unit? =
+    override suspend fun insertMeal(meal: Meal) {
         localDataSource?.upsertMeal(meal)
+    }
+
+    override fun getFavoritesMeals(): LiveData<List<Meal>>? = localDataSource?.getAllMeals()
 
     override suspend fun deleteMeal(meal: Meal): Unit? =
         localDataSource?.deleteMeal(meal)

@@ -20,15 +20,13 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class HomeViewModel(
-    private val homeRepository: HomeRepository
+    private val homeRepository: IHomeRepository
 ) : ViewModel() {
     //MutableLiveData means you can change it .. but live data you can't change it
 
     private var randomMealLiveData = MutableLiveData<Meal>()
     private var popularItemsLiveData = MutableLiveData<List<MealsByCategory>>()
     private var categoriesLiveData = MutableLiveData<List<Category>>()
-
-//    private var favoritesMealLiveData = homeRepository.getFavoritesMeals()
 
     fun getRandomMeal() {
         randomMealLiveData = homeRepository.getRandomMeal()
@@ -53,8 +51,7 @@ class HomeViewModel(
         return categoriesLiveData
     }
 
-//    fun observerFavoriteMealsLiveData(): LiveData<List<Meal>>? {
-//        return favoritesMealLiveData
-//    }
+    //
+
 
 }

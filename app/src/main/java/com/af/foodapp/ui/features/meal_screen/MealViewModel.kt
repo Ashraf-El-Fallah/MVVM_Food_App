@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.af.foodapp.data.IMealRepository
 import com.af.foodapp.data.repository.CategoryMealsRepository
 import com.af.foodapp.data.repository.MealRepository
 import com.af.foodapp.data.source.local.MealDatabase
@@ -17,7 +18,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MealViewModel(
-    private val mealRepository: MealRepository
+    private val mealRepository: IMealRepository
 ) : ViewModel() {
     private var mealDetailsLiveData = MutableLiveData<Meal>()
     fun getMealDetail(id: String) {

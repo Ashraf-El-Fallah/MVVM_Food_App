@@ -8,7 +8,7 @@ import com.af.foodapp.data.repository.CategoryMealsRepository
 import com.af.foodapp.data.source.remote.model.MealsByCategory
 
 class CategoryMealsViewModel(
-    private val categoryMealsRepository: CategoryMealsRepository
+    private val categoryMealsRepository: ICategoryMealsRepository
 ) : ViewModel() {
     //use live data to update meals when click on category
     private var mealsLiveData = MutableLiveData<List<MealsByCategory>>()

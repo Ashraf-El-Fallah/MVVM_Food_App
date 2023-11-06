@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="com.af.foodapp.ui.features.FavoriteFragment"
+        android:name="com.af.foodapp.ui.features.favorites_screen.FavoriteFragment"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite">
         <action

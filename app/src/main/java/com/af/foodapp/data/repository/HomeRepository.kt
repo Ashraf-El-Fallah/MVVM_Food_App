@@ -21,7 +21,7 @@ class HomeRepository(
     private val localDataSource: MealDao?
 ) : IHomeRepository {
     override fun getRandomMeal(): MutableLiveData<Meal> {
-        var randomMealLiveData = MutableLiveData<Meal>()
+        val randomMealLiveData = MutableLiveData<Meal>()
         remoteDataSource.getRandomMeal()
             .enqueue(object : Callback<MealList> {
                 override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
@@ -41,7 +41,7 @@ class HomeRepository(
     }
 
     override fun getPopularItems(): MutableLiveData<List<MealsByCategory>> {
-        var popularItemsLiveData = MutableLiveData<List<MealsByCategory>>()
+        val popularItemsLiveData = MutableLiveData<List<MealsByCategory>>()
         remoteDataSource.getPopularItems("Seafood")
             .enqueue(object : Callback<MealsByCategoryList> {
                 override fun onResponse(
@@ -61,7 +61,7 @@ class HomeRepository(
     }
 
     override fun getCategories(): MutableLiveData<List<Category>> {
-        var categoriesLiveData = MutableLiveData<List<Category>>()
+        val categoriesLiveData = MutableLiveData<List<Category>>()
         remoteDataSource.getCategories()
             .enqueue(object : Callback<CategoryList> {
                 override fun onResponse(
@@ -80,5 +80,4 @@ class HomeRepository(
         return categoriesLiveData
     }
 
-    override fun getFavoritesMeals(): LiveData<List<Meal>>? = localDataSource?.getAllMeals()
 }

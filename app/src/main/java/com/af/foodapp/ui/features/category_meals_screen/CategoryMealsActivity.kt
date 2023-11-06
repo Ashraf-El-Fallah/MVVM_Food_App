@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
+import com.af.foodapp.data.ICategoryMealsRepository
 import com.af.foodapp.data.repository.CategoryMealsRepository
 import com.af.foodapp.data.source.remote.RetrofitInstance
 import com.af.foodapp.databinding.ActivityCategoryMealsBinding
