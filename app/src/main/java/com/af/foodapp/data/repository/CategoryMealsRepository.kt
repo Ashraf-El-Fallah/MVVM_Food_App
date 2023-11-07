@@ -4,9 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.af.foodapp.data.ICategoryMealsRepository
-import com.af.foodapp.data.source.local.model.Meal
 import com.af.foodapp.data.source.remote.MealApi
-import com.af.foodapp.data.source.remote.RetrofitInstance
 import com.af.foodapp.data.source.remote.model.MealsByCategory
 import com.af.foodapp.data.source.remote.model.MealsByCategoryList
 import retrofit2.Call
@@ -17,7 +15,7 @@ class CategoryMealsRepository(private val remoteDataSource: MealApi) :
     ICategoryMealsRepository {
 
     //get meals by choosing category you want
-    override fun getMealsByCategory(categoryName: String): MutableLiveData<List<MealsByCategory>> {
+    override fun getMealsByCategory(categoryName: String): LiveData<List<MealsByCategory>> {
         val mealsLiveData = MutableLiveData<List<MealsByCategory>>()
         remoteDataSource.getMealsByCategory(categoryName)
             .enqueue(object : Callback<MealsByCategoryList> {

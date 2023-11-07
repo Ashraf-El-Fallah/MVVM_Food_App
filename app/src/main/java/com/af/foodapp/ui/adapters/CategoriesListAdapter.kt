@@ -40,7 +40,6 @@ class CategoriesListAdapter :
         return categoriesList.size.coerceAtMost(12)
     }
 
-    //set the picture of category ,the name of this category and make it clickable to show the meals
     override fun onBindViewHolder(
         holder: CategoriesListAdapter.CategoriesViewHolder,
         position: Int

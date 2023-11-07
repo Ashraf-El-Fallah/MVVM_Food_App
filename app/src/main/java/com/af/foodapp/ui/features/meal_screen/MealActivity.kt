@@ -6,19 +6,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.af.foodapp.data.repository.MealRepository
 import com.af.foodapp.data.source.local.MealDatabase
 import com.af.foodapp.data.source.local.model.Meal
 import com.af.foodapp.data.source.remote.RetrofitInstance
 import com.af.foodapp.databinding.ActivityMealBinding
-import com.af.foodapp.ui.features.home_screen.HomeViewModelFactory
 import com.af.foodapp.util.MealConstants
 import com.bumptech.glide.Glide
 
-//this activity used to display the information of the meal like steps to cook it and link to open youtube
 class MealActivity : AppCompatActivity() {
 
     private lateinit var mealId: String
@@ -62,42 +58,33 @@ class MealActivity : AppCompatActivity() {
     private var mealToSave: Meal? = null
 
     private fun observerMealDetailsLiveData() {
-        mealViewModel.observerMealDetailsLiveData().observe(this, Observer {
+        mealViewModel.getMealDetail(mealId).observe(this) {
             onResponseCase()
             mealToSave = it
             binding.tvCategory.text = "Category : ${it.strCategory}"
             binding.tvArea.text = "Area : ${it.strArea}"
             binding.tvInstructionsSteps.text = it.strInstructions
             youtubeLink = it.strYoutube!!
-        })
+        }
     }
 
-    //initialization for view model and pass meal id to api to get the response
     private fun initViewModel() {
         val mealRepository =
             MealRepository(
-                localDataSource = MealDatabase.getInstance(this).mealDao(),
+                localDataSource = MealDatabase.getInstance(applicationContext).mealDao(),
                 remoteDataSource = RetrofitInstance.api
             )
         val viewModelFactory = MealViewModelFactory(mealRepository)
         mealViewModel = ViewModelProvider(this, viewModelFactory)[MealViewModel::class.java]
-        mealViewModel.getMealDetail(mealId)
     }
 
-    //set imageview and meal name
     private fun setMealInformationInViews() {
         Glide.with(applicationContext)
             .load(mealThumb)
             .into(binding.imgMealDetail)
         binding.collapsingToolbar.title = mealName
-
-        //this set color when collapsing and extended but we use it in xml files
-
-//        binding.collapsingToolbar.setCollapsedTitleTextColor(resources.getColor(R.color.white))
-//        binding.collapsingToolbar.setExpandedTitleColor(resources.getColor(R.color.white))
     }
 
-    //get some meal information from the home fragment
     private fun getMealInformationFromIntent() {
         val intent = intent
         mealId = intent.getStringExtra(MealConstants.MEAL_ID)!!
@@ -105,8 +92,6 @@ class MealActivity : AppCompatActivity() {
         mealThumb = intent.getStringExtra(MealConstants.MEAL_THUMB)!!
     }
 
-    //this is used when response comes from api
-    //visible progress bar and hide other views
     private fun loadingCase() {
         binding.progressBar.visibility = View.VISIBLE
         binding.btnAddToFavorites.visibility = View.INVISIBLE
@@ -117,7 +102,6 @@ class MealActivity : AppCompatActivity() {
 
     }
 
-    //this is used after the response
     private fun onResponseCase() {
         binding.progressBar.visibility = View.INVISIBLE
         binding.btnAddToFavorites.visibility = View.VISIBLE

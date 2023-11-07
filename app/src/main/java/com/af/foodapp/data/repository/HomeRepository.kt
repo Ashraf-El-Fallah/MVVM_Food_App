@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.af.foodapp.data.IHomeRepository
-import com.af.foodapp.data.source.local.MealDao
 import com.af.foodapp.data.source.local.model.Meal
 import com.af.foodapp.data.source.remote.model.CategoryList
 import com.af.foodapp.data.source.remote.model.MealsByCategoryList
@@ -18,9 +17,8 @@ import retrofit2.Response
 
 class HomeRepository(
     private val remoteDataSource: MealApi,
-    private val localDataSource: MealDao?
 ) : IHomeRepository {
-    override fun getRandomMeal(): MutableLiveData<Meal> {
+    override fun getRandomMeal(): LiveData<Meal> {
         val randomMealLiveData = MutableLiveData<Meal>()
         remoteDataSource.getRandomMeal()
             .enqueue(object : Callback<MealList> {
@@ -40,7 +38,7 @@ class HomeRepository(
         return randomMealLiveData
     }
 
-    override fun getPopularItems(): MutableLiveData<List<MealsByCategory>> {
+    override fun getPopularItems(): LiveData<List<MealsByCategory>> {
         val popularItemsLiveData = MutableLiveData<List<MealsByCategory>>()
         remoteDataSource.getPopularItems("Seafood")
             .enqueue(object : Callback<MealsByCategoryList> {
@@ -60,7 +58,7 @@ class HomeRepository(
         return popularItemsLiveData
     }
 
-    override fun getCategories(): MutableLiveData<List<Category>> {
+    override fun getCategories(): LiveData<List<Category>> {
         val categoriesLiveData = MutableLiveData<List<Category>>()
         remoteDataSource.getCategories()
             .enqueue(object : Callback<CategoryList> {
@@ -79,10 +77,4 @@ class HomeRepository(
             })
         return categoriesLiveData
     }
-
-
-    ////////////////////////////////////////////////////////////////////////////////////
-//    override fun getFavoritesMeals(): LiveData<List<Meal>>? = localDataSource?.getAllMeals()
-
-
 }

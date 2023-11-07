@@ -10,10 +10,13 @@ import com.af.foodapp.data.source.local.model.Meal
 import com.af.foodapp.databinding.MealItemBinding
 import com.bumptech.glide.Glide
 
-class FavoriteMealsAdapter :
+
+class FavoriteMealsAdapter(private  val onItemClick: ((Meal) -> Unit)) :
     ListAdapter<Meal, FavoriteMealsAdapter.FavoriteMealsViewHolder>(DiffCallback()) {
     inner class FavoriteMealsViewHolder(val binding: MealItemBinding) :
         RecyclerView.ViewHolder(binding.root)
+
+
 
     private class DiffCallback : DiffUtil.ItemCallback<Meal>() {
         override fun areItemsTheSame(oldItem: Meal, newItem: Meal): Boolean {
@@ -43,6 +46,10 @@ class FavoriteMealsAdapter :
             .load(meal.strMealThumb)
             .into(holder.binding.imgMeal)
         holder.binding.tvMealName.text = meal.strMeal
+
+        holder.itemView.setOnClickListener {
+            onItemClick.invoke(meal)
+        }
     }
 
     override fun getItemCount() = differ.currentList.size

@@ -7,12 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.af.foodapp.data.repository.HomeRepository
-import com.af.foodapp.data.source.local.MealDatabase
 import com.af.foodapp.databinding.FragmentHomeBinding
 import com.af.foodapp.data.source.local.model.Meal
 import com.af.foodapp.data.source.remote.RetrofitInstance
@@ -20,7 +18,6 @@ import com.af.foodapp.ui.features.category_meals_screen.CategoryMealsActivity
 import com.af.foodapp.ui.features.meal_screen.MealActivity
 import com.af.foodapp.ui.adapters.CategoriesListAdapter
 import com.af.foodapp.ui.adapters.MostPopularMealsAdapter
-import com.af.foodapp.ui.features.MainActivity
 import com.af.foodapp.util.MealConstants
 import com.bumptech.glide.Glide
 
@@ -66,7 +63,6 @@ class HomeFragment : Fragment() {
         onCategoryClick()
     }
 
-    //make each category clickable and pass the name of each category to CategoryMealActivity
     private fun onCategoryClick() {
         categoriesListAdapter.onItemClick = {
             val intent = Intent(activity, CategoryMealsActivity::class.java)
@@ -75,7 +71,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-    //set up categories recycler view
     private fun prepareCategoriesRecyclerView() {
         binding.rvCategory.apply {
             layoutManager = GridLayoutManager(activity, 3, GridLayoutManager.VERTICAL, false)
@@ -83,14 +78,12 @@ class HomeFragment : Fragment() {
         }
     }
 
-    //observe the change of categories list and add it to recycler view
     private fun observerCategoriesLiveData() {
-        viewModel.observeCategoriesLiveData().observe(viewLifecycleOwner, Observer {
+        viewModel.getCategories().observe(viewLifecycleOwner) {
             categoriesListAdapter.setCategories(it)
-        })
+        }
     }
 
-    //make popular items clickable and pass the information about it to MealActivity
     private fun omPopularItemClick() {
         popularItemsAdapter.onItemClick = {
             val intent = Intent(activity, MealActivity::class.java)
@@ -101,7 +94,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-    //set up popular items recycler view
     private fun preparePopularItemsRecyclerView() {
         binding.rvPopularItems.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
@@ -109,15 +101,12 @@ class HomeFragment : Fragment() {
         }
     }
 
-    //observe the change of popular list and add it to recycler view
     private fun observerPopularItemsLiveData() {
-        viewModel.observePopularItemsLiveData().observe(viewLifecycleOwner, Observer {
+        viewModel.getPopularItems().observe(viewLifecycleOwner) {
             popularItemsAdapter.setMeals(it as ArrayList)
-        })
+        }
     }
 
-    //make random items clickable and pass the information about it to MealActivity
-    //send toast if meal doesn't display yet
     private fun onRandomMealClick() {
         binding.randomMealCard.setOnClickListener {
             if (::randomMeal.isInitialized) {
@@ -132,24 +121,20 @@ class HomeFragment : Fragment() {
         }
     }
 
-    //observe the change of random meal and set changes to random meal
     private fun observeRandomMealLiveData() {
-        viewModel.observeRandomMealLiveData().observe(viewLifecycleOwner, Observer {
+        viewModel.getRandomMeal().observe(viewLifecycleOwner) {
             Glide.with(this)
                 .load(it.strMealThumb)
                 .into(binding.imgRandomMeal)
             this.randomMeal = it
-        })
+        }
     }
 
 
     private fun initViewModel() {
-
-//        viewModel = (activity as MainActivity).viewModel
         val homeRepository =
             HomeRepository(
                 remoteDataSource = RetrofitInstance.api,
-                localDataSource = MealDatabase.getInstance(requireContext().applicationContext).mealDao()
             )
         val viewModelFactory = HomeViewModelFactory(homeRepository)
         viewModel = ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]

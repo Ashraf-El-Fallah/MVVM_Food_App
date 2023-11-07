@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 
 class MostPopularMealsAdapter :
     ListAdapter<MealsByCategory, MostPopularMealsAdapter.PopularMealViewHolder>(DiffCallback()) {
+
     lateinit var onItemClick: ((MealsByCategory) -> Unit)
     private var mealList = ArrayList<MealsByCategory>()
     private val differ = AsyncListDiffer(this, DiffCallback())

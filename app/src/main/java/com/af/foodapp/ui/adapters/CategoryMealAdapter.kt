@@ -6,12 +6,10 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.af.foodapp.data.source.remote.model.Category
 import com.af.foodapp.data.source.remote.model.MealsByCategory
 import com.af.foodapp.databinding.MealItemBinding
 import com.bumptech.glide.Glide
 
-//this adapter is used to display the meals after click on each category
 class CategoryMealAdapter :
     ListAdapter<MealsByCategory, CategoryMealAdapter.CategoryMealViewHolder>(DiffCallback()) {
     inner class CategoryMealViewHolder(val binding: MealItemBinding) :
@@ -21,7 +19,6 @@ class CategoryMealAdapter :
     lateinit var onItemClick: ((MealsByCategory) -> Unit)
     private val differ = AsyncListDiffer(this, DiffCallback())
 
-    //set the meals in each category
     fun setMeals(mealsList: List<MealsByCategory>) {
         this.mealsList = mealsList as ArrayList<MealsByCategory>
         differ.submitList(mealsList)
@@ -39,7 +36,6 @@ class CategoryMealAdapter :
         return mealsList.size
     }
 
-    //set the picture and the name of each meal and make it clickable
     override fun onBindViewHolder(
         holder: CategoryMealAdapter.CategoryMealViewHolder,
         position: Int

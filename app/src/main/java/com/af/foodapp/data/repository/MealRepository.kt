@@ -17,7 +17,7 @@ class MealRepository(
     private val remoteDataSource: MealApi
 ) : IMealRepository {
 
-    override fun getMealDetails(id: String): MutableLiveData<Meal> {
+    override fun getMealDetails(id: String): LiveData<Meal> {
         val mealDetailsLiveData = MutableLiveData<Meal>()
         remoteDataSource.getMealDetails(id)
             .enqueue(object : Callback<MealList> {
@@ -37,6 +37,7 @@ class MealRepository(
     override suspend fun upsertMeal(meal: Meal) {
         localDataSource?.upsertMeal(meal)
     }
+
     override suspend fun deleteMeal(meal: Meal): Unit? =
         localDataSource?.deleteMeal(meal)
 }
