@@ -61,7 +61,7 @@ class FavoriteFragment : Fragment() {
     private fun initViewModel() {
         val favoritesMealsRepository =
             FavoritesMealsRepository(
-                localDataSource = MealDatabase.INSTANCE?.mealDao(),
+                localDataSource = MealDatabase.getInstance(requireContext().applicationContext).mealDao(),
             )
         val viewModelFactory = FavoritesViewModelFactory(favoritesMealsRepository)
         favoritesViewModel =

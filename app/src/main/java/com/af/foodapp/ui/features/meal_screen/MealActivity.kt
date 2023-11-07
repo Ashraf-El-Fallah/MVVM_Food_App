@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.af.foodapp.data.repository.MealRepository
@@ -75,7 +76,7 @@ class MealActivity : AppCompatActivity() {
     private fun initViewModel() {
         val mealRepository =
             MealRepository(
-                localDataSource = MealDatabase.INSTANCE?.mealDao(),
+                localDataSource = MealDatabase.getInstance(this).mealDao(),
                 remoteDataSource = RetrofitInstance.api
             )
         val viewModelFactory = MealViewModelFactory(mealRepository)

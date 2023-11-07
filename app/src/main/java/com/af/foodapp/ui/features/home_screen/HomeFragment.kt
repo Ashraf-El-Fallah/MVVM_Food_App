@@ -149,7 +149,7 @@ class HomeFragment : Fragment() {
         val homeRepository =
             HomeRepository(
                 remoteDataSource = RetrofitInstance.api,
-                localDataSource = MealDatabase.INSTANCE?.mealDao()
+                localDataSource = MealDatabase.getInstance(requireContext().applicationContext).mealDao()
             )
         val viewModelFactory = HomeViewModelFactory(homeRepository)
         viewModel = ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
