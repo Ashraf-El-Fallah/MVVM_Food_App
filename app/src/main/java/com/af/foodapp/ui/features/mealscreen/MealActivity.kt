@@ -86,7 +86,6 @@ class MealActivity : AppCompatActivity() {
     }
 
     private fun getMealInformationFromIntent() {
-        val intent = intent
         mealId = intent.getStringExtra(MealConstants.MEAL_ID)!!
         mealName = intent.getStringExtra(MealConstants.MEAL_NAME)!!
         mealThumb = intent.getStringExtra(MealConstants.MEAL_THUMB)!!
@@ -94,21 +93,9 @@ class MealActivity : AppCompatActivity() {
 
     private fun loadingCase() {
         binding.progressBar.visibility = View.VISIBLE
-        binding.btnAddToFavorites.visibility = View.INVISIBLE
-        binding.tvInstructions.visibility = View.INVISIBLE
-        binding.tvCategory.visibility = View.INVISIBLE
-        binding.tvArea.visibility = View.INVISIBLE
-        binding.imgYoutube.visibility = View.INVISIBLE
-
     }
 
     private fun onResponseCase() {
         binding.progressBar.visibility = View.INVISIBLE
-        binding.btnAddToFavorites.visibility = View.VISIBLE
-        binding.tvInstructions.visibility = View.VISIBLE
-        binding.tvCategory.visibility = View.VISIBLE
-        binding.tvArea.visibility = View.VISIBLE
-        binding.imgYoutube.visibility = View.VISIBLE
-
     }
 }

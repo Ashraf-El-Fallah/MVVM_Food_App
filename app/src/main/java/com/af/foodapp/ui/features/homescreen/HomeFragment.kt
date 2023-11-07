@@ -23,7 +23,7 @@ import com.bumptech.glide.Glide
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var viewModel: HomeViewModel
+    private lateinit var homeViewModel: HomeViewModel
     private lateinit var randomMeal: Meal
     private lateinit var popularItemsAdapter: MostPopularMealsAdapter
     private lateinit var categoriesListAdapter: CategoriesListAdapter
@@ -53,15 +53,15 @@ class HomeFragment : Fragment() {
 
         preparePopularItemsRecyclerView()
 
-        viewModel.getRandomMeal()
+        homeViewModel.getRandomMeal()
         observeRandomMealLiveData()
         onRandomMealClick()
 
-        viewModel.getPopularItems()
+        homeViewModel.getPopularItems()
         observerPopularItemsLiveData()
 
         prepareCategoriesRecyclerView()
-        viewModel.getCategories()
+        homeViewModel.getCategories()
         observerCategoriesLiveData()
     }
 
@@ -87,7 +87,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun observerCategoriesLiveData() {
-        viewModel.getCategories().observe(viewLifecycleOwner) { categoriesList ->
+        homeViewModel.getCategories().observe(viewLifecycleOwner) { categoriesList ->
             categoriesListAdapter.differ.submitList(categoriesList)
         }
     }
@@ -100,7 +100,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun observerPopularItemsLiveData() {
-        viewModel.getPopularItems().observe(viewLifecycleOwner) { mostPopularMeals ->
+        homeViewModel.getPopularItems().observe(viewLifecycleOwner) { mostPopularMeals ->
             popularItemsAdapter.differ.submitList(mostPopularMeals as ArrayList)
         }
     }
@@ -121,11 +121,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeRandomMealLiveData() {
-        viewModel.getRandomMeal().observe(viewLifecycleOwner) {
+        homeViewModel.getRandomMeal().observe(viewLifecycleOwner) { randomMeal->
             Glide.with(this)
-                .load(it.strMealThumb)
+                .load(randomMeal.strMealThumb)
                 .into(binding.imgRandomMeal)
-            this.randomMeal = it
+            this.randomMeal = randomMeal
         }
     }
 
@@ -136,6 +136,6 @@ class HomeFragment : Fragment() {
                 remoteDataSource = RetrofitInstance.api,
             )
         val viewModelFactory = HomeViewModelFactory(homeRepository)
-        viewModel = ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
+        homeViewModel = ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
     }
 }

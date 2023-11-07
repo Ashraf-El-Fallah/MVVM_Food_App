@@ -5,4 +5,5 @@ import com.af.foodapp.data.source.local.model.Meal
 
 interface IFavoritesMealsRepository {
     fun getFavoritesMeals(): LiveData<List<Meal>>
+    suspend fun deleteMeal(meal: Meal)
 }

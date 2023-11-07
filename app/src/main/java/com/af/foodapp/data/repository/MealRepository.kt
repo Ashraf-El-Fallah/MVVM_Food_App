@@ -36,5 +36,4 @@ class MealRepository(
 
     override suspend fun upsertMeal(meal: Meal) = localDataSource.upsertMeal(meal)
 
-    override suspend fun deleteMeal(meal: Meal) = localDataSource.deleteMeal(meal)
 }

@@ -10,16 +10,9 @@ class MealViewModel(
     private val mealRepository: IMealRepository
 ) : ViewModel() {
     fun getMealDetail(id: String) = mealRepository.getMealDetails(id)
-
     fun insertMeal(meal: Meal) {
         viewModelScope.launch {
             mealRepository.upsertMeal(meal)
-        }
-    }
-
-    fun deleteMeal(meal: Meal) {
-        viewModelScope.launch {
-            mealRepository.deleteMeal(meal)
         }
     }
 }
