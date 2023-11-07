@@ -1,4 +1,4 @@
-package com.af.foodapp.ui.features.category_meals_screen
+package com.af.foodapp.ui.features.categorymeals
 
 import androidx.lifecycle.ViewModel
 import com.af.foodapp.data.ICategoryMealsRepository

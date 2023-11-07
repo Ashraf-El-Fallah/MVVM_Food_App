@@ -1,4 +1,4 @@
-package com.af.foodapp.ui.adapters
+package com.af.foodapp.ui.features.homescreen
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,17 +10,10 @@ import com.af.foodapp.databinding.PopularItemsBinding
 import com.af.foodapp.data.source.remote.model.MealsByCategory
 import com.bumptech.glide.Glide
 
-class MostPopularMealsAdapter :
+class MostPopularMealsAdapter(private val onItemClick: ((MealsByCategory) -> Unit)) :
     ListAdapter<MealsByCategory, MostPopularMealsAdapter.PopularMealViewHolder>(DiffCallback()) {
 
-    lateinit var onItemClick: ((MealsByCategory) -> Unit)
-    private var mealList = ArrayList<MealsByCategory>()
-    private val differ = AsyncListDiffer(this, DiffCallback())
-
-    fun setMeals(mealList: ArrayList<MealsByCategory>) {
-        this.mealList = mealList
-        differ.submitList(mealList)
-    }
+    val differ = AsyncListDiffer(this, DiffCallback())
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopularMealViewHolder {
         return PopularMealViewHolder(
@@ -32,21 +25,20 @@ class MostPopularMealsAdapter :
         )
     }
 
-    override fun getItemCount(): Int {
-        return mealList.size
-    }
+    override fun getItemCount() = differ.currentList.size
 
     //set the picture of each meal and make it clickable
     override fun onBindViewHolder(
-        holder: MostPopularMealsAdapter.PopularMealViewHolder,
+        holder: PopularMealViewHolder,
         position: Int
     ) {
+        val mostPopularMeal = differ.currentList[position]
         Glide.with(holder.itemView)
-            .load(mealList[position].strMealThumb)
+            .load(mostPopularMeal.strMealThumb)
             .into(holder.binding.imgPopularMealItem)
 
         holder.itemView.setOnClickListener {
-            onItemClick.invoke(mealList[position])
+            onItemClick.invoke(mostPopularMeal)
         }
     }
 

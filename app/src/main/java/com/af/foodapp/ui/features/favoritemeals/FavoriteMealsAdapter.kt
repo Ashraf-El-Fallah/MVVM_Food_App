@@ -1,4 +1,4 @@
-package com.af.foodapp.ui.adapters
+package com.af.foodapp.ui.features.favoritemeals
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -16,7 +16,7 @@ class FavoriteMealsAdapter(private  val onItemClick: ((Meal) -> Unit)) :
     inner class FavoriteMealsViewHolder(val binding: MealItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-
+    val differ = AsyncListDiffer(this, DiffCallback())
 
     private class DiffCallback : DiffUtil.ItemCallback<Meal>() {
         override fun areItemsTheSame(oldItem: Meal, newItem: Meal): Boolean {
@@ -27,8 +27,6 @@ class FavoriteMealsAdapter(private  val onItemClick: ((Meal) -> Unit)) :
             return oldItem == newItem
         }
     }
-
-    val differ = AsyncListDiffer(this, DiffCallback())
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteMealsViewHolder {
         return FavoriteMealsViewHolder(

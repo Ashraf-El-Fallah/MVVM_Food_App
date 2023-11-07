@@ -1,13 +1,13 @@
-package com.af.foodapp.ui.features.favorites_screen
+package com.af.foodapp.ui.features.favoritemeals
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.af.foodapp.data.repository.FavoritesMealsRepository
 
-class FavoritesViewModelFactory(
+class FavoriteMealsViewModelFactory(
     private val favoritesMealsRepository: FavoritesMealsRepository
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return FavoritesViewModel(favoritesMealsRepository) as T
+        return FavoriteMealsViewModel(favoritesMealsRepository) as T
     }
 }

@@ -1,4 +1,4 @@
-package com.af.foodapp.ui.adapters
+package com.af.foodapp.ui.features.homescreen
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,21 +11,13 @@ import com.af.foodapp.databinding.CategoryItemBinding
 import com.bumptech.glide.Glide
 
 //this adapter is used to display the categories of food in home screen
-class CategoriesListAdapter :
+class CategoriesListAdapter(private val onItemClick: ((Category) -> Unit)) :
     ListAdapter<Category, CategoriesListAdapter.CategoriesViewHolder>(DiffCallback()) {
 
     inner class CategoriesViewHolder(val binding: CategoryItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    private var categoriesList = ArrayList<Category>()
-    var onItemClick: ((Category) -> Unit)? = null
-    private val differ = AsyncListDiffer(this, DiffCallback())
-
-    //this is used to set the category list in recycler view
-    fun setCategories(categoriesList: List<Category>) {
-        this.categoriesList = categoriesList as ArrayList
-        differ.submitList(categoriesList)
-    }
+    val differ = AsyncListDiffer(this, DiffCallback())
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoriesViewHolder {
         return CategoriesViewHolder(
@@ -35,22 +27,21 @@ class CategoriesListAdapter :
         )
     }
 
-    override fun getItemCount(): Int {
-        // I used only 12 because there is a problem with the last two items _pictures_ so i ignored them
-        return categoriesList.size.coerceAtMost(12)
-    }
+    // I used only 12 because there is a problem with the last two items _pictures_ so i ignored them
+    override fun getItemCount() = differ.currentList.size.coerceAtMost(12)
 
     override fun onBindViewHolder(
-        holder: CategoriesListAdapter.CategoriesViewHolder,
+        holder: CategoriesViewHolder,
         position: Int
     ) {
+        val category = differ.currentList[position]
         Glide.with(holder.itemView)
-            .load(categoriesList[position].strCategoryThumb)
+            .load(category.strCategoryThumb)
             .into(holder.binding.imgCategory)
-        holder.binding.tvCategoryName.text = categoriesList[position].strCategory
+        holder.binding.tvCategoryName.text = category.strCategory
 
         holder.itemView.setOnClickListener {
-            onItemClick!!.invoke(categoriesList[position])
+            onItemClick.invoke(category)
         }
     }
 

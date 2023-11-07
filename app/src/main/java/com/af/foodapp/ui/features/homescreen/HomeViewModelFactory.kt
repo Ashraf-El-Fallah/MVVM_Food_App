@@ -1,8 +1,7 @@
-package com.af.foodapp.ui.features.home_screen
+package com.af.foodapp.ui.features.homescreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.af.foodapp.data.IHomeRepository
 import com.af.foodapp.data.repository.HomeRepository
 
 class HomeViewModelFactory(

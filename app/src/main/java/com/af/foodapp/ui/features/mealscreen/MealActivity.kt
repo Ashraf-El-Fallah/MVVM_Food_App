@@ -1,4 +1,4 @@
-package com.af.foodapp.ui.features.meal_screen
+package com.af.foodapp.ui.features.mealscreen
 
 import android.content.Intent
 import android.net.Uri

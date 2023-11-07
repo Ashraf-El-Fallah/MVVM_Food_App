@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.af.foodapp.ui.features.home_screen.HomeFragment"
+        android:name="com.af.foodapp.ui.features.homescreen.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="com.af.foodapp.ui.features.favorites_screen.FavoriteFragment"
+        android:name="com.af.foodapp.ui.features.favoritemeals.FavoriteMealsFragment"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite">
         <action

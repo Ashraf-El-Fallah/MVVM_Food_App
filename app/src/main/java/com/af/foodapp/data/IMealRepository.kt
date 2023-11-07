@@ -6,5 +6,5 @@ import com.af.foodapp.data.source.local.model.Meal
 interface IMealRepository {
     fun getMealDetails(id: String): LiveData<Meal>
     suspend fun upsertMeal(meal: Meal)
-    suspend fun deleteMeal(meal: Meal): Unit?
+    suspend fun deleteMeal(meal: Meal)
 }

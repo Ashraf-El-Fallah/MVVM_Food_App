@@ -1,4 +1,4 @@
-package com.af.foodapp.ui.adapters
+package com.af.foodapp.ui.features.categorymeals
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,19 +10,12 @@ import com.af.foodapp.data.source.remote.model.MealsByCategory
 import com.af.foodapp.databinding.MealItemBinding
 import com.bumptech.glide.Glide
 
-class CategoryMealAdapter :
-    ListAdapter<MealsByCategory, CategoryMealAdapter.CategoryMealViewHolder>(DiffCallback()) {
+class CategoryMealsAdapter(private val onItemClick: ((MealsByCategory) -> Unit)) :
+    ListAdapter<MealsByCategory, CategoryMealsAdapter.CategoryMealViewHolder>(DiffCallback()) {
     inner class CategoryMealViewHolder(val binding: MealItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    private var mealsList = ArrayList<MealsByCategory>()
-    lateinit var onItemClick: ((MealsByCategory) -> Unit)
-    private val differ = AsyncListDiffer(this, DiffCallback())
-
-    fun setMeals(mealsList: List<MealsByCategory>) {
-        this.mealsList = mealsList as ArrayList<MealsByCategory>
-        differ.submitList(mealsList)
-    }
+    val differ = AsyncListDiffer(this, DiffCallback())
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryMealViewHolder {
         return CategoryMealViewHolder(
@@ -32,21 +25,20 @@ class CategoryMealAdapter :
         )
     }
 
-    override fun getItemCount(): Int {
-        return mealsList.size
-    }
+    override fun getItemCount() = differ.currentList.size
 
     override fun onBindViewHolder(
-        holder: CategoryMealAdapter.CategoryMealViewHolder,
+        holder: CategoryMealViewHolder,
         position: Int
     ) {
+        val meal = differ.currentList[position]
         Glide.with(holder.itemView)
-            .load(mealsList[position].strMealThumb)
+            .load(meal.strMealThumb)
             .into(holder.binding.imgMeal)
-        holder.binding.tvMealName.text = mealsList[position].strMeal
+        holder.binding.tvMealName.text = meal.strMeal
 
         holder.itemView.setOnClickListener {
-            onItemClick.invoke(mealsList[position])
+            onItemClick.invoke(meal)
         }
     }
 

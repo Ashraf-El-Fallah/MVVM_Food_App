@@ -1,4 +1,4 @@
-package com.af.foodapp.ui.features.meal_screen
+package com.af.foodapp.ui.features.mealscreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

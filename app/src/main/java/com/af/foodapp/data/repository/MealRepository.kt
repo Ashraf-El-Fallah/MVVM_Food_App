@@ -13,7 +13,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MealRepository(
-    private val localDataSource: MealDao?,
+    private val localDataSource: MealDao,
     private val remoteDataSource: MealApi
 ) : IMealRepository {
 
@@ -34,10 +34,7 @@ class MealRepository(
         return mealDetailsLiveData
     }
 
-    override suspend fun upsertMeal(meal: Meal) {
-        localDataSource?.upsertMeal(meal)
-    }
+    override suspend fun upsertMeal(meal: Meal) = localDataSource.upsertMeal(meal)
 
-    override suspend fun deleteMeal(meal: Meal): Unit? =
-        localDataSource?.deleteMeal(meal)
+    override suspend fun deleteMeal(meal: Meal) = localDataSource.deleteMeal(meal)
 }

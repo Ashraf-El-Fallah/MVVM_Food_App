@@ -1,4 +1,4 @@
-package com.af.foodapp.ui.features.home_screen
+package com.af.foodapp.ui.features.homescreen
 
 import androidx.lifecycle.ViewModel
 import com.af.foodapp.data.IHomeRepository

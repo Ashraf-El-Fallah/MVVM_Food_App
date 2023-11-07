@@ -1,9 +1,9 @@
-package com.af.foodapp.ui.features.favorites_screen
+package com.af.foodapp.ui.features.favoritemeals
 
 import androidx.lifecycle.ViewModel
 import com.af.foodapp.data.IFavoritesMealsRepository
 
-class FavoritesViewModel(
+class FavoriteMealsViewModel(
     private val favoritesMealRepository: IFavoritesMealsRepository
 ) : ViewModel() {
     fun observerFavoriteMealsLiveData() = favoritesMealRepository.getFavoritesMeals()

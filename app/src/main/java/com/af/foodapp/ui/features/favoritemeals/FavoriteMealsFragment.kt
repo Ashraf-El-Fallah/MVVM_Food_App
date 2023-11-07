@@ -1,4 +1,4 @@
-package com.af.foodapp.ui.features.favorites_screen
+package com.af.foodapp.ui.features.favoritemeals
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,21 +13,20 @@ import com.af.foodapp.data.repository.FavoritesMealsRepository
 import com.af.foodapp.data.source.local.MealDatabase
 import com.af.foodapp.data.source.local.model.Meal
 import com.af.foodapp.databinding.FragmentFavoriteBinding
-import com.af.foodapp.ui.adapters.FavoriteMealsAdapter
-import com.af.foodapp.ui.features.meal_screen.MealActivity
+import com.af.foodapp.ui.features.mealscreen.MealActivity
 import com.af.foodapp.util.MealConstants
 
 
-class FavoriteFragment : Fragment() {
+class FavoriteMealsFragment : Fragment() {
     private lateinit var binding: FragmentFavoriteBinding
-    private lateinit var favoritesViewModel: FavoritesViewModel
+    private lateinit var favoriteMealsViewModel: FavoriteMealsViewModel
     private lateinit var favoriteMealsAdapter: FavoriteMealsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initViewModel()
-        favoriteMealsAdapter = FavoriteMealsAdapter {
-            navigateToMealDetails(it)
+        favoriteMealsAdapter = FavoriteMealsAdapter {clickedMeal->
+            navigateToMealDetails(clickedMeal)
         }
     }
 
@@ -46,11 +45,11 @@ class FavoriteFragment : Fragment() {
         observerFavorites()
     }
 
-    private fun navigateToMealDetails(it: Meal) {
+    private fun navigateToMealDetails(clickedMeal: Meal) {
         val intent = Intent(activity, MealActivity::class.java)
-        intent.putExtra(MealConstants.MEAL_NAME, it.strMeal)
-        intent.putExtra(MealConstants.MEAL_ID, it.idMeal)
-        intent.putExtra(MealConstants.MEAL_THUMB, it.strMealThumb)
+        intent.putExtra(MealConstants.MEAL_NAME, clickedMeal.strMeal)
+        intent.putExtra(MealConstants.MEAL_ID, clickedMeal.idMeal)
+        intent.putExtra(MealConstants.MEAL_THUMB, clickedMeal.strMealThumb)
         startActivity(intent)
     }
 
@@ -62,7 +61,7 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun observerFavorites() {
-        favoritesViewModel.observerFavoriteMealsLiveData()
+        favoriteMealsViewModel.observerFavoriteMealsLiveData()
             .observe(viewLifecycleOwner) { favoriteMeals ->
                 favoriteMealsAdapter.differ.submitList(favoriteMeals)
             }
@@ -74,8 +73,8 @@ class FavoriteFragment : Fragment() {
                 localDataSource = MealDatabase.getInstance(requireContext())
                     .mealDao(),
             )
-        val viewModelFactory = FavoritesViewModelFactory(favoritesMealsRepository)
-        favoritesViewModel =
-            ViewModelProvider(this, viewModelFactory)[FavoritesViewModel::class.java]
+        val viewModelFactory = FavoriteMealsViewModelFactory(favoritesMealsRepository)
+        favoriteMealsViewModel =
+            ViewModelProvider(this, viewModelFactory)[FavoriteMealsViewModel::class.java]
     }
 }

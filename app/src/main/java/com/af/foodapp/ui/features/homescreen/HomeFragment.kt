@@ -1,4 +1,4 @@
-package com.af.foodapp.ui.features.home_screen
+package com.af.foodapp.ui.features.homescreen
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,10 +14,10 @@ import com.af.foodapp.data.repository.HomeRepository
 import com.af.foodapp.databinding.FragmentHomeBinding
 import com.af.foodapp.data.source.local.model.Meal
 import com.af.foodapp.data.source.remote.RetrofitInstance
-import com.af.foodapp.ui.features.category_meals_screen.CategoryMealsActivity
-import com.af.foodapp.ui.features.meal_screen.MealActivity
-import com.af.foodapp.ui.adapters.CategoriesListAdapter
-import com.af.foodapp.ui.adapters.MostPopularMealsAdapter
+import com.af.foodapp.data.source.remote.model.Category
+import com.af.foodapp.data.source.remote.model.MealsByCategory
+import com.af.foodapp.ui.features.categorymeals.CategoryMealsActivity
+import com.af.foodapp.ui.features.mealscreen.MealActivity
 import com.af.foodapp.util.MealConstants
 import com.bumptech.glide.Glide
 
@@ -32,8 +32,12 @@ class HomeFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         initViewModel()
-        popularItemsAdapter = MostPopularMealsAdapter()
-        categoriesListAdapter = CategoriesListAdapter()
+        popularItemsAdapter = MostPopularMealsAdapter { clickedMeal ->
+            navigateToMealDetails(clickedMeal)
+        }
+        categoriesListAdapter = CategoriesListAdapter { clickedCategory ->
+            navigateToCategoryMeals(clickedCategory)
+        }
     }
 
     override fun onCreateView(
@@ -55,20 +59,24 @@ class HomeFragment : Fragment() {
 
         viewModel.getPopularItems()
         observerPopularItemsLiveData()
-        omPopularItemClick()
 
         prepareCategoriesRecyclerView()
         viewModel.getCategories()
         observerCategoriesLiveData()
-        onCategoryClick()
     }
 
-    private fun onCategoryClick() {
-        categoriesListAdapter.onItemClick = {
-            val intent = Intent(activity, CategoryMealsActivity::class.java)
-            intent.putExtra(MealConstants.CATEGORY_NAME, it.strCategory)
-            startActivity(intent)
-        }
+    private fun navigateToMealDetails(clickedMeal: MealsByCategory) {
+        val intent = Intent(activity, MealActivity::class.java)
+        intent.putExtra(MealConstants.MEAL_NAME, clickedMeal.strMeal)
+        intent.putExtra(MealConstants.MEAL_ID, clickedMeal.idMeal)
+        intent.putExtra(MealConstants.MEAL_THUMB, clickedMeal.strMealThumb)
+        startActivity(intent)
+    }
+
+    private fun navigateToCategoryMeals(clickedCategory: Category) {
+        val intent = Intent(activity, CategoryMealsActivity::class.java)
+        intent.putExtra(MealConstants.CATEGORY_NAME, clickedCategory.strCategory)
+        startActivity(intent)
     }
 
     private fun prepareCategoriesRecyclerView() {
@@ -79,18 +87,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun observerCategoriesLiveData() {
-        viewModel.getCategories().observe(viewLifecycleOwner) {
-            categoriesListAdapter.setCategories(it)
-        }
-    }
-
-    private fun omPopularItemClick() {
-        popularItemsAdapter.onItemClick = {
-            val intent = Intent(activity, MealActivity::class.java)
-            intent.putExtra(MealConstants.MEAL_NAME, it.strMeal)
-            intent.putExtra(MealConstants.MEAL_ID, it.idMeal)
-            intent.putExtra(MealConstants.MEAL_THUMB, it.strMealThumb)
-            startActivity(intent)
+        viewModel.getCategories().observe(viewLifecycleOwner) { categoriesList ->
+            categoriesListAdapter.differ.submitList(categoriesList)
         }
     }
 
@@ -102,8 +100,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun observerPopularItemsLiveData() {
-        viewModel.getPopularItems().observe(viewLifecycleOwner) {
-            popularItemsAdapter.setMeals(it as ArrayList)
+        viewModel.getPopularItems().observe(viewLifecycleOwner) { mostPopularMeals ->
+            popularItemsAdapter.differ.submitList(mostPopularMeals as ArrayList)
         }
     }
 
@@ -116,7 +114,8 @@ class HomeFragment : Fragment() {
                 intent.putExtra(MealConstants.MEAL_THUMB, randomMeal.strMealThumb)
                 startActivity(intent)
             } else {
-                Toast.makeText(context, "Meal data is not available yet", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Meal data is not available yet", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }
