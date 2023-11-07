@@ -10,6 +10,7 @@ import com.af.foodapp.data.repository.CategoryMealsRepository
 import com.af.foodapp.data.source.remote.RetrofitInstance
 import com.af.foodapp.data.source.remote.model.MealsByCategory
 import com.af.foodapp.databinding.ActivityCategoryMealsBinding
+import com.af.foodapp.ui.features.adapters.CategoryMealsAdapter
 import com.af.foodapp.ui.features.mealscreen.MealActivity
 import com.af.foodapp.util.MealConstants
 

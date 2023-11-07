@@ -16,6 +16,7 @@ import com.af.foodapp.data.source.local.MealDatabase
 import com.af.foodapp.data.source.local.model.Meal
 import com.af.foodapp.data.source.remote.RetrofitInstance
 import com.af.foodapp.databinding.FragmentFavoriteBinding
+import com.af.foodapp.ui.features.adapters.FavoriteMealsAdapter
 import com.af.foodapp.ui.features.mealscreen.MealActivity
 import com.af.foodapp.util.MealConstants
 import com.google.android.material.snackbar.Snackbar

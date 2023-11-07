@@ -7,15 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.af.foodapp.data.repository.HomeRepository
 import com.af.foodapp.databinding.FragmentHomeBinding
 import com.af.foodapp.data.source.local.model.Meal
-import com.af.foodapp.data.source.remote.RetrofitInstance
 import com.af.foodapp.data.source.remote.model.Category
 import com.af.foodapp.data.source.remote.model.MealsByCategory
+import com.af.foodapp.ui.features.MainActivity
+import com.af.foodapp.ui.features.adapters.CategoriesListAdapter
+import com.af.foodapp.ui.features.adapters.MostPopularMealsAdapter
 import com.af.foodapp.ui.features.categorymeals.CategoryMealsActivity
 import com.af.foodapp.ui.features.mealscreen.MealActivity
 import com.af.foodapp.util.MealConstants
@@ -121,7 +121,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeRandomMealLiveData() {
-        homeViewModel.getRandomMeal().observe(viewLifecycleOwner) { randomMeal->
+        homeViewModel.getRandomMeal().observe(viewLifecycleOwner) { randomMeal ->
             Glide.with(this)
                 .load(randomMeal.strMealThumb)
                 .into(binding.imgRandomMeal)
@@ -131,11 +131,6 @@ class HomeFragment : Fragment() {
 
 
     private fun initViewModel() {
-        val homeRepository =
-            HomeRepository(
-                remoteDataSource = RetrofitInstance.api,
-            )
-        val viewModelFactory = HomeViewModelFactory(homeRepository)
-        homeViewModel = ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
+        homeViewModel = (activity as MainActivity).viewModel
     }
 }

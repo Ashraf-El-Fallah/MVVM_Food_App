@@ -25,7 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/categoriesFragment"
-        android:name="com.af.foodapp.ui.features.CategoriesFragment"
+        android:name="com.af.foodapp.ui.features.categories.CategoriesFragment"
         android:label="fragment_categories"
         tools:layout="@layout/fragment_categories" />
 </navigation>

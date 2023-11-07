@@ -1,4 +1,4 @@
-package com.af.foodapp.ui.features.homescreen
+package com.af.foodapp.ui.features.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
