@@ -39,6 +39,7 @@ class HomeViewModel(
     fun getCategories() {
         categoriesLiveData = homeRepository.getCategories()
     }
+
     fun observeRandomMealLiveData(): LiveData<Meal> {
         return randomMealLiveData
     }
@@ -50,8 +51,5 @@ class HomeViewModel(
     fun observeCategoriesLiveData(): LiveData<List<Category>> {
         return categoriesLiveData
     }
-
-    //
-
 
 }

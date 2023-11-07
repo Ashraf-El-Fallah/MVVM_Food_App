@@ -8,6 +8,7 @@ import com.af.foodapp.ui.features.home_screen.HomeViewModel
 class MealViewModelFactory(
     private val mealRepository: MealRepository
 ) : ViewModelProvider.Factory {
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return MealViewModel(mealRepository) as T
     }

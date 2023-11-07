@@ -1,6 +1,7 @@
 package com.af.foodapp.data.source.local
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -16,7 +17,6 @@ interface MealDao {
     @Delete
     suspend fun deleteMeal(meal: Meal)
 
-    //we don't use suspend because we use live data
     @Query("SELECT * FROM mealInformation")
     fun getAllMeals(): LiveData<List<Meal>>?
 }

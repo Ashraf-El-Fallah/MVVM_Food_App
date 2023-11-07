@@ -20,12 +20,13 @@ import com.af.foodapp.ui.features.category_meals_screen.CategoryMealsActivity
 import com.af.foodapp.ui.features.meal_screen.MealActivity
 import com.af.foodapp.ui.adapters.CategoriesListAdapter
 import com.af.foodapp.ui.adapters.MostPopularMealsAdapter
+import com.af.foodapp.ui.features.MainActivity
 import com.af.foodapp.util.MealConstants
 import com.bumptech.glide.Glide
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var viewModel: HomeViewModel
     private lateinit var randomMeal: Meal
     private lateinit var popularItemsAdapter: MostPopularMealsAdapter
     private lateinit var categoriesListAdapter: CategoriesListAdapter
@@ -51,16 +52,16 @@ class HomeFragment : Fragment() {
 
         preparePopularItemsRecyclerView()
 
-        homeViewModel.getRandomMeal()
+        viewModel.getRandomMeal()
         observeRandomMealLiveData()
         onRandomMealClick()
 
-        homeViewModel.getPopularItems()
+        viewModel.getPopularItems()
         observerPopularItemsLiveData()
         omPopularItemClick()
 
         prepareCategoriesRecyclerView()
-        homeViewModel.getCategories()
+        viewModel.getCategories()
         observerCategoriesLiveData()
         onCategoryClick()
     }
@@ -84,7 +85,7 @@ class HomeFragment : Fragment() {
 
     //observe the change of categories list and add it to recycler view
     private fun observerCategoriesLiveData() {
-        homeViewModel.observeCategoriesLiveData().observe(viewLifecycleOwner, Observer {
+        viewModel.observeCategoriesLiveData().observe(viewLifecycleOwner, Observer {
             categoriesListAdapter.setCategories(it)
         })
     }
@@ -110,7 +111,7 @@ class HomeFragment : Fragment() {
 
     //observe the change of popular list and add it to recycler view
     private fun observerPopularItemsLiveData() {
-        homeViewModel.observePopularItemsLiveData().observe(viewLifecycleOwner, Observer {
+        viewModel.observePopularItemsLiveData().observe(viewLifecycleOwner, Observer {
             popularItemsAdapter.setMeals(it as ArrayList)
         })
     }
@@ -133,7 +134,7 @@ class HomeFragment : Fragment() {
 
     //observe the change of random meal and set changes to random meal
     private fun observeRandomMealLiveData() {
-        homeViewModel.observeRandomMealLiveData().observe(viewLifecycleOwner, Observer {
+        viewModel.observeRandomMealLiveData().observe(viewLifecycleOwner, Observer {
             Glide.with(this)
                 .load(it.strMealThumb)
                 .into(binding.imgRandomMeal)
@@ -143,13 +144,14 @@ class HomeFragment : Fragment() {
 
 
     private fun initViewModel() {
+
+//        viewModel = (activity as MainActivity).viewModel
         val homeRepository =
             HomeRepository(
                 remoteDataSource = RetrofitInstance.api,
                 localDataSource = MealDatabase.INSTANCE?.mealDao()
             )
         val viewModelFactory = HomeViewModelFactory(homeRepository)
-        homeViewModel = ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
+        viewModel = ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
     }
-
 }

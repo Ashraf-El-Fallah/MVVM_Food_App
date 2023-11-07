@@ -34,12 +34,9 @@ class MealRepository(
         return mealDetailsLiveData
     }
 
-    override suspend fun insertMeal(meal: Meal) {
+    override suspend fun upsertMeal(meal: Meal) {
         localDataSource?.upsertMeal(meal)
     }
-
-    override fun getFavoritesMeals(): LiveData<List<Meal>>? = localDataSource?.getAllMeals()
-
     override suspend fun deleteMeal(meal: Meal): Unit? =
         localDataSource?.deleteMeal(meal)
 }

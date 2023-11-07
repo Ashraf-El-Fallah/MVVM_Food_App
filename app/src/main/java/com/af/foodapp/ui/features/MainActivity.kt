@@ -13,8 +13,18 @@ import com.af.foodapp.ui.features.home_screen.HomeFragment
 import com.af.foodapp.ui.features.home_screen.HomeViewModel
 import com.af.foodapp.ui.features.home_screen.HomeViewModelFactory
 
-class MainActivity : AppCompatActivity(){
+class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
+//    val viewModel: HomeViewModel by lazy {
+//        val homeRepository =
+//            HomeRepository(
+//                remoteDataSource = RetrofitInstance.api,
+//                localDataSource = MealDatabase.INSTANCE?.mealDao()
+//            )
+//        val viewModelFactory = HomeViewModelFactory(homeRepository)
+//        ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

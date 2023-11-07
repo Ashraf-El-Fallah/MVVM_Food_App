@@ -2,14 +2,14 @@ package com.af.foodapp.data.source.local.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "mealInformation")
 data class Meal(
-    val dateModified: Any?,
-
     @PrimaryKey
     val idMeal: String,
 
+    val dateModified: Any?,
     val strArea: String?,
     val strCategory: String?,
     val strCreativeCommonsConfirmed: Any?,

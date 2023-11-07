@@ -14,12 +14,15 @@ import com.af.foodapp.data.repository.FavoritesMealsRepository
 import com.af.foodapp.data.source.local.MealDatabase
 import com.af.foodapp.databinding.FragmentFavoriteBinding
 import com.af.foodapp.ui.adapters.FavoriteMealsAdapter
+import com.af.foodapp.ui.features.MainActivity
+import com.af.foodapp.ui.features.home_screen.HomeViewModel
 
 
 class FavoriteFragment : Fragment() {
     private lateinit var binding: FragmentFavoriteBinding
     private lateinit var favoritesViewModel: FavoritesViewModel
     private lateinit var favoriteMealsAdapter: FavoriteMealsAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initViewModel()
@@ -64,6 +67,6 @@ class FavoriteFragment : Fragment() {
         favoritesViewModel =
             ViewModelProvider(this, viewModelFactory)[FavoritesViewModel::class.java]
     }
-
+//        favoritesViewModel = (activity as MainActivity).viewModel
 
 }

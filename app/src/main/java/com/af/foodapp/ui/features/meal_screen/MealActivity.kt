@@ -51,7 +51,6 @@ class MealActivity : AppCompatActivity() {
         }
     }
 
-    //to open video in youtube to show how to cook this meal
     private fun onYoutubeImageClick() {
         binding.imgYoutube.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink))
@@ -61,7 +60,6 @@ class MealActivity : AppCompatActivity() {
 
     private var mealToSave: Meal? = null
 
-    //observe the information about this meal to update the ui information
     private fun observerMealDetailsLiveData() {
         mealViewModel.observerMealDetailsLiveData().observe(this, Observer {
             onResponseCase()
@@ -81,7 +79,7 @@ class MealActivity : AppCompatActivity() {
                 remoteDataSource = RetrofitInstance.api
             )
         val viewModelFactory = MealViewModelFactory(mealRepository)
-        mealViewModel = ViewModelProvider(this,viewModelFactory)[MealViewModel::class.java]
+        mealViewModel = ViewModelProvider(this, viewModelFactory)[MealViewModel::class.java]
         mealViewModel.getMealDetail(mealId)
     }
 

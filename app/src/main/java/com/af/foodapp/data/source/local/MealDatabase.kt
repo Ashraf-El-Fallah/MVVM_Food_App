@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.af.foodapp.data.source.local.model.Meal
 
-@Database(entities = [Meal::class], version = 1)
+@Database(entities = [Meal::class], version = 1, exportSchema = false)
 @TypeConverters(MealTypeConvertor::class)
 abstract class MealDatabase : RoomDatabase() {
     abstract fun mealDao(): MealDao
@@ -18,15 +18,19 @@ abstract class MealDatabase : RoomDatabase() {
 
         @Synchronized
         fun getInstance(context: Context): MealDatabase {
-            if (INSTANCE == null) {
-                INSTANCE = Room.databaseBuilder(
-                    context,
-                    MealDatabase::class.java,
-                    "meal.db"
-                ).fallbackToDestructiveMigration()
-                    .build()
+            val tempInstance = INSTANCE
+            if (tempInstance != null) {
+                return tempInstance
             }
-            return INSTANCE as MealDatabase
+            synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    MealDatabase::class.java,
+                    "user_database"
+                ).build()
+                INSTANCE = instance
+                return instance
+            }
         }
     }
 }
