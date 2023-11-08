@@ -32,15 +32,23 @@ and links to YouTube videos for recipe demonstrations.
 # Technologies
 
 -Retrofit
+
 -Room
+
 -Navigation Component
+
 -LiveData
+
 -View Binding
+
 -MVVM (Model-View-ViewModel) Architecture
+
 -Coroutines
+
 -Glide
 
 # Architecture
+
 ![MVVFoodApp](https://github.com/Ashraf-El-Fallah/MVVM_Food_App/assets/108183484/e613e63b-310c-4762-941c-3b2c3d690695)
 
 
