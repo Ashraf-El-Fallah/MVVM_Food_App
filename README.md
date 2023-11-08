@@ -2,12 +2,12 @@
 MyFoodApp is a mobile application for discovering, storing, and viewing food recipes. Users can search for recipes,explore different food categories, and save their favorite dishes. The app provides detailed meal information, including ingredients and cooking instructions,
 and links to YouTube videos for recipe demonstrations.
 
-Features:
+# Features:
 
-Explore a wide range of recipes.
-Search for meals by name or ingredients.
-Store and access your favorite recipes.
-Access step-by-step cooking instructions and video tutorials.
+-Explore a wide range of recipes.
+-Search for meals by name or ingredients.
+-Store and access your favorite recipes.
+-Access step-by-step cooking instructions and video tutorials.
 
 # Demo
 ![Screenshot_2023-11-08-23-58-50-50_0bdcec2163170b1d89d7e03b57eec73a](https://github.com/Ashraf-El-Fallah/MVVM_Food_App/assets/108183484/300d9e3d-318f-478b-9dc7-8a63ce004f50)
