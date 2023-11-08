@@ -14,6 +14,7 @@ import com.af.foodapp.data.source.local.model.Meal
 import com.af.foodapp.data.source.remote.model.Category
 import com.af.foodapp.data.source.remote.model.MealsByCategory
 import com.af.foodapp.ui.features.MainActivity
+import com.af.foodapp.ui.features.MealBottomSheetFragment
 import com.af.foodapp.ui.features.adapters.CategoriesListAdapter
 import com.af.foodapp.ui.features.adapters.MostPopularMealsAdapter
 import com.af.foodapp.ui.features.categorymeals.CategoryMealsActivity
@@ -32,9 +33,13 @@ class HomeFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         initViewModel()
-        popularItemsAdapter = MostPopularMealsAdapter { clickedMeal ->
+
+        popularItemsAdapter = MostPopularMealsAdapter({ clickedMeal ->
             navigateToMealDetails(clickedMeal)
-        }
+        }, { onLongItemClick ->
+            showBottomSheetForMeal(onLongItemClick)
+        })
+
         categoriesListAdapter = CategoriesListAdapter { clickedCategory ->
             navigateToCategoryMeals(clickedCategory)
         }
@@ -65,11 +70,18 @@ class HomeFragment : Fragment() {
         observerCategoriesLiveData()
     }
 
+    private fun showBottomSheetForMeal(onLongItemClick: MealsByCategory) {
+        val mealBottomSheetFragment = MealBottomSheetFragment.newInstance(onLongItemClick.idMeal)
+        mealBottomSheetFragment.show(childFragmentManager, "Meal Info")
+    }
+
     private fun navigateToMealDetails(clickedMeal: MealsByCategory) {
         val intent = Intent(activity, MealActivity::class.java)
-        intent.putExtra(MealConstants.MEAL_NAME, clickedMeal.strMeal)
-        intent.putExtra(MealConstants.MEAL_ID, clickedMeal.idMeal)
-        intent.putExtra(MealConstants.MEAL_THUMB, clickedMeal.strMealThumb)
+        intent.apply {
+            putExtra(MealConstants.MEAL_NAME, clickedMeal.strMeal)
+            putExtra(MealConstants.MEAL_ID, clickedMeal.idMeal)
+            putExtra(MealConstants.MEAL_THUMB, clickedMeal.strMealThumb)
+        }
         startActivity(intent)
     }
 

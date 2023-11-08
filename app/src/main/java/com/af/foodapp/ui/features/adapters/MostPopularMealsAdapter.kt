@@ -10,7 +10,10 @@ import com.af.foodapp.databinding.PopularItemsBinding
 import com.af.foodapp.data.source.remote.model.MealsByCategory
 import com.bumptech.glide.Glide
 
-class MostPopularMealsAdapter(private val onItemClick: ((MealsByCategory) -> Unit)) :
+class MostPopularMealsAdapter(
+    private val onItemClick: ((MealsByCategory) -> Unit),
+    private val onLongItemClick: ((MealsByCategory) -> Unit)
+) :
     ListAdapter<MealsByCategory, MostPopularMealsAdapter.PopularMealViewHolder>(DiffCallback()) {
 
     val differ = AsyncListDiffer(this, DiffCallback())
@@ -39,6 +42,11 @@ class MostPopularMealsAdapter(private val onItemClick: ((MealsByCategory) -> Uni
 
         holder.itemView.setOnClickListener {
             onItemClick.invoke(mostPopularMeal)
+        }
+
+        holder.itemView.setOnLongClickListener {
+            onLongItemClick.invoke(mostPopularMeal)
+            true
         }
     }
 

@@ -77,4 +77,22 @@ class HomeRepository(
             })
         return categoriesLiveData
     }
+
+    override fun getMealById(id: String): LiveData<Meal?> {
+        val mealLiveData = MutableLiveData<Meal?>()
+        remoteDataSource.getMealDetails(id).enqueue(object : Callback<MealList> {
+            override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
+                if (response.isSuccessful) {
+                    val meal = response.body()?.meals?.first()
+                    mealLiveData.postValue(meal)
+                }
+            }
+
+            override fun onFailure(call: Call<MealList>, t: Throwable) {
+                Log.d("MainViewModel", t.message.toString())
+            }
+        })
+        return mealLiveData
+    }
+
 }

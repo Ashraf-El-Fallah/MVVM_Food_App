@@ -11,7 +11,9 @@ import com.af.foodapp.databinding.MealItemBinding
 import com.bumptech.glide.Glide
 
 
-class FavoriteMealsAdapter(private  val onItemClick: ((Meal) -> Unit)) :
+class FavoriteMealsAdapter(
+    private val onItemClick: ((Meal) -> Unit),
+) :
     ListAdapter<Meal, FavoriteMealsAdapter.FavoriteMealsViewHolder>(DiffCallback()) {
     inner class FavoriteMealsViewHolder(val binding: MealItemBinding) :
         RecyclerView.ViewHolder(binding.root)
