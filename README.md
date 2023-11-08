@@ -14,7 +14,7 @@ and links to YouTube videos for recipe demonstrations.
 
 # Demo
 
-![Screenshot_2023-11-08-23-58-50-50_0bdcec2163170b1d89d7e03b57eec73a](https://github.com/Ashraf-El-Fallah/MVVM_Food_App/assets/108183484/300d9e3d-318f-478b-9dc7-8a63ce004f50)
+![Screenshot_2023-11-08-23-58-50-50_0bdcec2163170b1d89d7e03b57eec73a](https://github.com/Ashraf-El-Fallah/MVVM_Food_App/assets/108183484/300d9e3d-318f-478b-9dc7-8a63ce004f50 =250x250)
 
 ![Screenshot_2023-11-08-23-42-59-29_0bdcec2163170b1d89d7e03b57eec73a](https://github.com/Ashraf-El-Fallah/MVVM_Food_App/assets/108183484/4c177ec6-25c8-48e5-a659-c03c210d1fb9)
 
