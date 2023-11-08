@@ -5,8 +5,11 @@ and links to YouTube videos for recipe demonstrations.
 # Features:
 
 -Explore a wide range of recipes.
+
 -Search for meals by name or ingredients.
+
 -Store and access your favorite recipes.
+
 -Access step-by-step cooking instructions and video tutorials.
 
 # Demo
