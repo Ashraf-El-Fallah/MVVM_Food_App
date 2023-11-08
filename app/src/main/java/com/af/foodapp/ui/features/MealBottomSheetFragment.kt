@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isVisible
+import com.af.foodapp.data.source.Result
 import com.af.foodapp.databinding.FragmentMealBottomSheetBinding
 import com.af.foodapp.ui.features.homescreen.HomeViewModel
 import com.af.foodapp.ui.features.mealscreen.MealActivity
@@ -60,13 +63,29 @@ class MealBottomSheetFragment : BottomSheetDialogFragment() {
     private fun observeBottomSheetMeal() {
         mealId?.let {
             viewModel.getMealById(it).observe(viewLifecycleOwner) { meal ->
-                Glide.with(this).load(meal?.strMealThumb).into(binding.imgCategory)
-                binding.tvMealCountry.text = meal?.strArea
-                binding.tvMealCategory.text = meal?.strCategory
-                binding.tvMealNameInBtmsheet.text = "${meal?.strMeal?.take(25)}.."
+                when (meal) {
+                    Result.Loading -> binding.progressBar.isVisible = true
 
-                mealName = meal?.strMeal
-                mealThumb = meal?.strMealThumb
+                    is Result.Success -> {
+                        binding.progressBar.isVisible = false
+                        Glide.with(this).load(meal.data?.strMealThumb).into(binding.imgCategory)
+                        binding.tvMealCountry.text = meal.data?.strArea
+                        binding.tvMealCategory.text = meal.data?.strCategory
+                        binding.tvMealNameInBtmsheet.text = "${meal.data?.strMeal?.take(25)}.."
+                        mealName = meal.data?.strMeal
+                        mealThumb = meal.data?.strMealThumb
+                    }
+
+                    is Result.Error -> {
+                        binding.progressBar.isVisible = false
+                        Toast.makeText(
+                            context,
+                            meal.throwable?.message.toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+
             }
         }
     }

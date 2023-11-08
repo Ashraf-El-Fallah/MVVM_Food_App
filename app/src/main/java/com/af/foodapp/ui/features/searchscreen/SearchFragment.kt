@@ -7,10 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
+import com.af.foodapp.data.source.Result
 import com.af.foodapp.data.source.local.model.Meal
 import com.af.foodapp.databinding.FragmentSearchBinding
 import com.af.foodapp.ui.features.MainActivity
@@ -68,7 +70,23 @@ class SearchFragment : Fragment() {
         val searchQuery = binding.edSearch.text.toString()
         if (searchQuery.isNotEmpty()) {
             viewModel.searchMeals(searchQuery).observe(viewLifecycleOwner) { searchedMeals ->
-                searchRecyclerViewAdapter.differ.submitList(searchedMeals)
+                when (searchedMeals) {
+                    Result.Loading -> binding.progressBar.isVisible = true
+
+                    is Result.Success -> {
+                        binding.progressBar.isVisible = false
+                        searchRecyclerViewAdapter.differ.submitList(searchedMeals.data)
+                    }
+
+                    is Result.Error -> {
+                        binding.progressBar.isVisible = false
+                        Toast.makeText(
+                            context,
+                            searchedMeals.throwable?.message.toString(),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
             }
         } else
             Toast.makeText(context, "Enter the meal you want to search about!", Toast.LENGTH_SHORT)
@@ -98,5 +116,4 @@ class SearchFragment : Fragment() {
     private fun initViewModel() {
         viewModel = (activity as MainActivity).viewModel
     }
-
 }

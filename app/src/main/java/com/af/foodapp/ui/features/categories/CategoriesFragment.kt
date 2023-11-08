@@ -5,9 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
+import com.af.foodapp.data.source.Result
 import com.af.foodapp.data.source.remote.model.Category
 import com.af.foodapp.databinding.FragmentCategoriesBinding
 import com.af.foodapp.ui.features.MainActivity
@@ -41,9 +44,25 @@ class CategoriesFragment : Fragment() {
 
     private fun onObserveCategories() {
         categoriesViewModel.getCategories().observe(viewLifecycleOwner) { categoriesList ->
-            categoriesAdapter.differ.submitList(categoriesList)
+            when (categoriesList) {
+                Result.Loading -> binding.progressBar.isVisible = false
+
+                is Result.Success -> {
+                    categoriesAdapter.differ.submitList(categoriesList.data)
+                }
+
+                is Result.Error -> {
+                    binding.progressBar.isVisible = true
+                    Toast.makeText(
+                        context,
+                        categoriesList.throwable?.message.toString(),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
         }
     }
+
     private fun setUpRecyclerView() {
         categoriesAdapter = CategoriesListAdapter { clickedCategory ->
             navigateToCategoryMeals(clickedCategory)

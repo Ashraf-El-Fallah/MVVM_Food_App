@@ -7,10 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.af.foodapp.R
+import com.af.foodapp.data.source.Result
 import com.af.foodapp.databinding.FragmentHomeBinding
 import com.af.foodapp.data.source.local.model.Meal
 import com.af.foodapp.data.source.remote.model.Category
@@ -102,7 +104,25 @@ class HomeFragment : Fragment() {
 
     private fun observerCategoriesLiveData() {
         homeViewModel.getCategories().observe(viewLifecycleOwner) { categoriesList ->
-            categoriesListAdapter.differ.submitList(categoriesList)
+            when (categoriesList) {
+                Result.Loading -> {
+                    visibleProgressbar()
+                }
+
+                is Result.Success -> {
+                    hideProgressbar()
+                    categoriesListAdapter.differ.submitList(categoriesList.data)
+                }
+
+                is Result.Error -> {
+                    hideProgressbar()
+                    Toast.makeText(
+                        context,
+                        categoriesList.throwable?.message.toString(),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
         }
     }
 
@@ -121,8 +141,27 @@ class HomeFragment : Fragment() {
 
     private fun observerPopularItemsLiveData() {
         homeViewModel.getPopularItems().observe(viewLifecycleOwner) { mostPopularMeals ->
-            popularItemsAdapter.differ.submitList(mostPopularMeals as ArrayList)
+            when (mostPopularMeals) {
+                Result.Loading -> {
+                    visibleProgressbar()
+                }
+
+                is Result.Success -> {
+                    hideProgressbar()
+                    popularItemsAdapter.differ.submitList(mostPopularMeals.data)
+                }
+
+                is Result.Error -> {
+                    hideProgressbar()
+                    Toast.makeText(
+                        context,
+                        mostPopularMeals.throwable?.message.toString(),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
         }
+//        popularItemsAdapter.differ.submitList(mostPopularMeals as ArrayList)
     }
 
     private fun onRandomMealClick() {
@@ -142,13 +181,38 @@ class HomeFragment : Fragment() {
 
     private fun observeRandomMealLiveData() {
         homeViewModel.getRandomMeal().observe(viewLifecycleOwner) { randomMeal ->
-            Glide.with(this)
-                .load(randomMeal.strMealThumb)
-                .into(binding.imgRandomMeal)
-            this.randomMeal = randomMeal
+            when (randomMeal) {
+                Result.Loading -> {
+                    visibleProgressbar()
+                }
+
+                is Result.Success -> {
+                    hideProgressbar()
+                    Glide.with(this)
+                        .load(randomMeal.data.strMealThumb)
+                        .into(binding.imgRandomMeal)
+                    this.randomMeal = randomMeal.data
+                }
+
+                is Result.Error -> {
+                    hideProgressbar()
+                    Toast.makeText(
+                        context,
+                        randomMeal.throwable?.message.toString(),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
         }
     }
 
+    private fun visibleProgressbar() {
+        binding.progressBar.isVisible = true
+    }
+
+    private fun hideProgressbar() {
+        binding.progressBar.isVisible = false
+    }
 
     private fun initViewModel() {
         homeViewModel = (activity as MainActivity).viewModel

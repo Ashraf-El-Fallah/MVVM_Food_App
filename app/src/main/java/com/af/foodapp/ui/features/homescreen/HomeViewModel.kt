@@ -9,6 +9,7 @@ class HomeViewModel(
     init {
         getRandomMeal()
     }
+
     fun getRandomMeal() = homeRepository.getRandomMeal()
 
     fun getPopularItems() = homeRepository.getPopularItems()

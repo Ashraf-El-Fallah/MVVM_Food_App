@@ -10,26 +10,34 @@ import com.af.foodapp.data.source.remote.model.MealsByCategoryList
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import com.af.foodapp.data.source.Result
+
 
 class CategoryMealsRepository(private val remoteDataSource: MealApi) :
     ICategoryMealsRepository {
 
     //get meals by choosing category you want
-    override fun getMealsByCategory(categoryName: String): LiveData<List<MealsByCategory>> {
-        val mealsLiveData = MutableLiveData<List<MealsByCategory>>()
+    override fun getMealsByCategory(categoryName: String): LiveData<Result<List<MealsByCategory>>> {
+        val mealsLiveData = MutableLiveData<Result<List<MealsByCategory>>>()
+        mealsLiveData.value = Result.Loading
+
         remoteDataSource.getMealsByCategory(categoryName)
             .enqueue(object : Callback<MealsByCategoryList> {
                 override fun onResponse(
                     call: Call<MealsByCategoryList>,
                     response: Response<MealsByCategoryList>
                 ) {
-                    response.body()?.let {
-                        mealsLiveData.postValue(it.meals)
+                    if (response.isSuccessful) {
+                        mealsLiveData.value = Result.Success(response.body()?.meals ?: emptyList())
+                    } else {
+                        mealsLiveData.value =
+                            Result.Error(Throwable(message = "Failed to fetch data"))
                     }
                 }
 
                 override fun onFailure(call: Call<MealsByCategoryList>, t: Throwable) {
                     Log.d("CategoryMealsViewModel", t.message.toString())
+                    mealsLiveData.value = Result.Error(t)
                 }
             })
         return mealsLiveData

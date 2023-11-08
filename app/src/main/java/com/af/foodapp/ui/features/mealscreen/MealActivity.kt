@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.af.foodapp.data.repository.MealRepository
+import com.af.foodapp.data.source.Result
 import com.af.foodapp.data.source.local.MealDatabase
 import com.af.foodapp.data.source.local.model.Meal
 import com.af.foodapp.data.source.remote.RetrofitInstance
@@ -31,7 +32,7 @@ class MealActivity : AppCompatActivity() {
 
 
         getMealInformationFromIntent()
-        loadingCase()
+//        loadingCase()
         setMealInformationInViews()
         initViewModel()
         observerMealDetailsLiveData()
@@ -58,13 +59,29 @@ class MealActivity : AppCompatActivity() {
     private var mealToSave: Meal? = null
 
     private fun observerMealDetailsLiveData() {
-        mealViewModel.getMealDetail(mealId).observe(this) {
-            onResponseCase()
-            mealToSave = it
-            binding.tvCategory.text = "Category : ${it.strCategory}"
-            binding.tvArea.text = "Area : ${it.strArea}"
-            binding.tvInstructionsSteps.text = it.strInstructions
-            youtubeLink = it.strYoutube!!
+        mealViewModel.getMealDetail(mealId).observe(this) { mealDetails ->
+            when (mealDetails) {
+                Result.Loading -> loadingCase()
+
+                is Result.Success -> {
+                    onResponseCase()
+                    mealToSave = mealDetails.data
+                    binding.tvCategory.text = "Category : ${mealDetails.data.strCategory}"
+                    binding.tvArea.text = "Area : ${mealDetails.data.strArea}"
+                    binding.tvInstructionsSteps.text = mealDetails.data.strInstructions
+                    youtubeLink = mealDetails.data.strYoutube!!
+
+                }
+
+                is Result.Error -> {
+                    onResponseCase()
+                    Toast.makeText(
+                        this,
+                        mealDetails.throwable?.message.toString(),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
         }
     }
 
