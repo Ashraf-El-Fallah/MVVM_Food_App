@@ -1,4 +1,4 @@
-# MVVM_Food_App
+![Screenshot_20231109-003753](https://github.com/Ashraf-El-Fallah/MVVM_Food_App/assets/108183484/da9c3d89-f89f-45b0-81a8-185a0b532a8e)![Screenshot_20231109-003812](https://github.com/Ashraf-El-Fallah/MVVM_Food_App/assets/108183484/47f5c127-b2ab-4854-90f2-300e495320f7)![Screenshot_20231109-003744](https://github.com/Ashraf-El-Fallah/MVVM_Food_App/assets/108183484/0e172f21-b164-4028-88ce-5bade7b3e01a)![Screenshot_20231109-003801](https://github.com/Ashraf-El-Fallah/MVVM_Food_App/assets/108183484/a7faf55f-7e39-4d32-95bd-cfc74cb909df)# MVVM_Food_App
 MyFoodApp is a mobile application for discovering, storing, and viewing food recipes. Users can search for recipes,explore different food categories, and save their favorite dishes. The app provides detailed meal information, including ingredients and cooking instructions,
 and links to YouTube videos for recipe demonstrations.
 
@@ -14,7 +14,21 @@ and links to YouTube videos for recipe demonstrations.
 
 # Demo
 
-![Screenshot_20231109-003543](https://github.com/Ashraf-El-Fallah/MVVM_Food_App/assets/108183484/be2e517b-f597-4984-a83e-f23ce7b85960)
+![Screenshot_20231109-003744](https://github.com/Ashraf-El-Fallah/MVVM_Food_App/assets/108183484/1667a880-ca18-4c79-a4f0-ed3c49571127)
+
+![Screenshot_20231109-003543](https://github.com/Ashraf-El-Fallah/MVVM_Food_App/assets/108183484/8d587b1d-ff30-4699-b9ed-2b79cf636e81)
+
+![Screenshot_20231109-003910](https://github.com/Ashraf-El-Fallah/MVVM_Food_App/assets/108183484/a4c056fe-73c4-4924-aed4-44dc6b98eaed)
+
+![Screenshot_20231109-003826](https://github.com/Ashraf-El-Fallah/MVVM_Food_App/assets/108183484/54d8a04f-8dd6-4dfe-a751-852f1904b1aa)
+
+![Screenshot_20231109-003819](https://github.com/Ashraf-El-Fallah/MVVM_Food_App/assets/108183484/415f6299-9810-466a-8e5d-92867a8b1498)
+
+![Screenshot_20231109-003812](https://github.com/Ashraf-El-Fallah/MVVM_Food_App/assets/108183484/d6511599-77d8-414d-bc99-93ea7ad474a4)
+
+![Screenshot_20231109-003801](https://github.com/Ashraf-El-Fallah/MVVM_Food_App/assets/108183484/d0a1a294-e6c2-452e-bef5-4be3ac6417f7)
+
+![Screenshot_20231109-003753](https://github.com/Ashraf-El-Fallah/MVVM_Food_App/assets/108183484/5f99894c-2f63-46c4-8776-f1bf5a984fdd)
 
 # Technologies
 
