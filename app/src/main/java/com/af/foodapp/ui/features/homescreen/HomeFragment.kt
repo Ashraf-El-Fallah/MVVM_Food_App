@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.af.foodapp.R
 import com.af.foodapp.databinding.FragmentHomeBinding
 import com.af.foodapp.data.source.local.model.Meal
 import com.af.foodapp.data.source.remote.model.Category
@@ -31,18 +33,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         initViewModel()
-
-        popularItemsAdapter = MostPopularMealsAdapter({ clickedMeal ->
-            navigateToMealDetails(clickedMeal)
-        }, { onLongItemClick ->
-            showBottomSheetForMeal(onLongItemClick)
-        })
-
-        categoriesListAdapter = CategoriesListAdapter { clickedCategory ->
-            navigateToCategoryMeals(clickedCategory)
-        }
     }
 
     override fun onCreateView(
@@ -56,7 +47,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        preparePopularItemsRecyclerView()
+        setUpPopularItemsRecyclerView()
 
         homeViewModel.getRandomMeal()
         observeRandomMealLiveData()
@@ -65,9 +56,17 @@ class HomeFragment : Fragment() {
         homeViewModel.getPopularItems()
         observerPopularItemsLiveData()
 
-        prepareCategoriesRecyclerView()
+        setUpCategoriesRecyclerView()
         homeViewModel.getCategories()
         observerCategoriesLiveData()
+
+        navigateToSearchFragment()
+    }
+
+    private fun navigateToSearchFragment() {
+        binding.imgSearch.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+        }
     }
 
     private fun showBottomSheetForMeal(onLongItemClick: MealsByCategory) {
@@ -91,7 +90,11 @@ class HomeFragment : Fragment() {
         startActivity(intent)
     }
 
-    private fun prepareCategoriesRecyclerView() {
+    private fun setUpCategoriesRecyclerView() {
+        categoriesListAdapter = CategoriesListAdapter { clickedCategory ->
+            navigateToCategoryMeals(clickedCategory)
+        }
+
         binding.rvCategory.apply {
             layoutManager = GridLayoutManager(activity, 3, GridLayoutManager.VERTICAL, false)
             adapter = categoriesListAdapter
@@ -104,7 +107,13 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun preparePopularItemsRecyclerView() {
+    private fun setUpPopularItemsRecyclerView() {
+        popularItemsAdapter = MostPopularMealsAdapter({ clickedMeal ->
+            navigateToMealDetails(clickedMeal)
+        }, { onLongItemClick ->
+            showBottomSheetForMeal(onLongItemClick)
+        })
+
         binding.rvPopularItems.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             adapter = popularItemsAdapter

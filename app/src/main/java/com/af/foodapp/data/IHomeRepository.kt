@@ -9,6 +9,7 @@ interface IHomeRepository {
     fun getRandomMeal(): LiveData<Meal>
     fun getPopularItems(): LiveData<List<MealsByCategory>>
     fun getCategories(): LiveData<List<Category>>
-
     fun getMealById(id: String): LiveData<Meal?>
+
+    fun searchMeals(searchQuery: String): LiveData<List<Meal>?>
 }

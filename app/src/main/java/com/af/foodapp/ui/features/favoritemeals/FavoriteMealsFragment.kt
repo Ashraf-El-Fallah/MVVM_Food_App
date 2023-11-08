@@ -16,7 +16,7 @@ import com.af.foodapp.data.source.local.MealDatabase
 import com.af.foodapp.data.source.local.model.Meal
 import com.af.foodapp.data.source.remote.RetrofitInstance
 import com.af.foodapp.databinding.FragmentFavoriteBinding
-import com.af.foodapp.ui.features.adapters.FavoriteMealsAdapter
+import com.af.foodapp.ui.features.adapters.MealsAdapter
 import com.af.foodapp.ui.features.mealscreen.MealActivity
 import com.af.foodapp.util.MealConstants
 import com.google.android.material.snackbar.Snackbar
@@ -25,14 +25,12 @@ import com.google.android.material.snackbar.Snackbar
 class FavoriteMealsFragment : Fragment() {
     private lateinit var binding: FragmentFavoriteBinding
     private lateinit var favoriteMealsViewModel: FavoriteMealsViewModel
-    private lateinit var favoriteMealsAdapter: FavoriteMealsAdapter
+    private lateinit var mealsAdapter: MealsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initViewModel()
-        favoriteMealsAdapter = FavoriteMealsAdapter { clickedMeal ->
-            navigateToMealDetails(clickedMeal)
-        }
+
     }
 
     override fun onCreateView(
@@ -65,7 +63,7 @@ class FavoriteMealsFragment : Fragment() {
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             val position = viewHolder.adapterPosition
-            val currentMeal = favoriteMealsAdapter.differ.currentList[position]
+            val currentMeal = mealsAdapter.differ.currentList[position]
             favoriteMealsViewModel.deleteMeal(currentMeal)
 
             Snackbar.make(requireView(), "Meal deleted", Snackbar.LENGTH_LONG).setAction("Undo") {
@@ -76,23 +74,30 @@ class FavoriteMealsFragment : Fragment() {
 
     private fun navigateToMealDetails(clickedMeal: Meal) {
         val intent = Intent(activity, MealActivity::class.java)
-        intent.putExtra(MealConstants.MEAL_NAME, clickedMeal.strMeal)
-        intent.putExtra(MealConstants.MEAL_ID, clickedMeal.idMeal)
-        intent.putExtra(MealConstants.MEAL_THUMB, clickedMeal.strMealThumb)
+        intent.apply {
+            putExtra(MealConstants.MEAL_NAME, clickedMeal.strMeal)
+            putExtra(MealConstants.MEAL_ID, clickedMeal.idMeal)
+            putExtra(MealConstants.MEAL_THUMB, clickedMeal.strMealThumb)
+        }
         startActivity(intent)
     }
 
     private fun setUpRecyclerView() {
+
+        mealsAdapter = MealsAdapter { clickedMeal ->
+            navigateToMealDetails(clickedMeal)
+        }
+
         binding.rvFavorites.apply {
             layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)
-            adapter = favoriteMealsAdapter
+            adapter = mealsAdapter
         }
     }
 
     private fun observerFavorites() {
         favoriteMealsViewModel.observerFavoriteMealsLiveData()
             .observe(viewLifecycleOwner) { favoriteMeals ->
-                favoriteMealsAdapter.differ.submitList(favoriteMeals)
+                mealsAdapter.differ.submitList(favoriteMeals)
             }
     }
 

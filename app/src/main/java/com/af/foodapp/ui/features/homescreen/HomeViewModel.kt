@@ -14,4 +14,5 @@ class HomeViewModel(
 
     fun getMealById(id: String) = homeRepository.getMealById(id)
 
+    fun searchMeals(searchQuery: String) = homeRepository.searchMeals(searchQuery)
 }

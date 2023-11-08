@@ -95,4 +95,23 @@ class HomeRepository(
         return mealLiveData
     }
 
+    override fun searchMeals(searchQuery: String): LiveData<List<Meal>?> {
+        val searchedMealsLiveData = MutableLiveData<List<Meal>?>()
+        remoteDataSource.searchMeals(searchQuery).enqueue(object : Callback<MealList> {
+            override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
+                if (response.isSuccessful) {
+                    val meals = response.body()?.meals
+                    meals?.let {
+                        searchedMealsLiveData.postValue(meals)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<MealList>, t: Throwable) {
+                Log.d("MainViewModel", t.message.toString())
+            }
+        })
+        return searchedMealsLiveData
+    }
+
 }
