@@ -6,6 +6,9 @@ import com.af.foodapp.data.IHomeRepository
 class HomeViewModel(
     private val homeRepository: IHomeRepository
 ) : ViewModel() {
+    init {
+        getRandomMeal()
+    }
     fun getRandomMeal() = homeRepository.getRandomMeal()
 
     fun getPopularItems() = homeRepository.getPopularItems()

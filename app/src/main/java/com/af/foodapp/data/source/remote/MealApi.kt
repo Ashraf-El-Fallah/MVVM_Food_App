@@ -13,10 +13,12 @@ interface MealApi {
 
     //this endpoint come from url .. you know it after base url and when it have ? this means there is an id after it so don't take it
     //take from ? to the end of base url
-    @GET("lookup.php?")
+
+    //using ? is meaning u  can have on query ... but without ? you can add more than one query
+    @GET("lookup.php")
     fun getMealDetails(@Query("i") id: String): Call<MealList>
 
-    @GET("filter.php?")
+    @GET("filter.php")
     fun getPopularItems(@Query("c") categoryName: String): Call<MealsByCategoryList>
 
     @GET("categories.php")
