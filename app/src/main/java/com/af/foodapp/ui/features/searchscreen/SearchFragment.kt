@@ -45,7 +45,6 @@ class SearchFragment : Fragment() {
         setUpRecyclerView()
         setOnClickSearchIcon()
 
-//        searchWhenWriting()
     }
 
     private fun setOnClickSearchIcon() {
